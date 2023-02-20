@@ -1,0 +1,165 @@
+$(document).ready(function () {
+
+    $('input:radio').each(function () {
+        if ($(this).is(':checked')) {
+            $(this).parents('.box-radio').addClass('box--selected');
+        }
+    });
+
+    $('input:radio').change(function () {
+        $('input:radio[name=\'' + $(this).attr('name') + '\']').parents('.box-radio').removeClass('box--selected');
+        if ($(this).is(':checked')) {
+            $(this).parents('.box-radio').addClass('box--selected');
+        }
+    });
+
+    //hide error message
+    $('span[id$=\'-error\']').each(function () {
+        $(this).hide();
+    });
+
+    whiteListPopoverContent();
+    $(function () {
+        $('[data-toggle="popover"]').popover()
+    });
+
+    if (typeof lastActiveTab !== "undefined"){
+        for (var i = 1; i <= lastActiveTab; i++) {
+            var elementId = "#mo-tab-" + i;
+            $(elementId).removeClass("d-none");
+        }
+    }
+});
+
+var whiteListPopoverContent = function () {
+    $.fn.popover.Constructor.Default.whiteList.table = [];
+    $.fn.popover.Constructor.Default.whiteList.tr = [];
+    $.fn.popover.Constructor.Default.whiteList.td = [];
+    $.fn.popover.Constructor.Default.whiteList.th = [];
+    $.fn.popover.Constructor.Default.whiteList.div = [];
+    $.fn.popover.Constructor.Default.whiteList.tbody = [];
+    $.fn.popover.Constructor.Default.whiteList.thead = [];
+}
+
+var hideConfirmBoxError = function () {
+    $("#confirm-box-error").html("");
+}
+
+var showNotification = function (title, content) {
+    $('#title').html(title);
+    $('#bodyContent').html(content);
+    $('#commonMsgViewer').modal('show');
+}
+
+function getAge(dateString) {
+    var birthdayArr = dateString.split("/");
+    var now = new Date();
+    var birthday = new Date(birthdayArr[2], birthdayArr[1] - 1, birthdayArr[0]);
+
+    var diff_year = parseInt(now.getUTCFullYear() - birthday.getUTCFullYear());
+    var diff_month = parseInt(now.getUTCMonth() - birthday.getUTCMonth());
+    var diff_day = parseInt(now.getUTCDate() - birthday.getUTCDate());
+
+    var days_in_month = [31, (now.getUTCFullYear() % 4 ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    var date_string = "";
+    while (true) {
+        date_string = "";
+        date_string += (diff_year > 0 ? diff_year + (diff_year == 1 ? " Year " : " Years ") : "");
+
+        if (diff_month < 0) {
+            diff_year -= 1;
+            diff_month += 12;
+            continue;
+        }
+        date_string += (diff_month > 0 ? diff_month + (diff_month == 1 ? " Month " : " Months ") : "");
+
+        if (diff_day < 0) {
+            diff_month -= 1;
+            diff_day += days_in_month[((11 + now.getUTCMonth()) % 12)];
+            continue;
+        }
+        date_string += (diff_day > 0 ? diff_day + (diff_day == 1 ? " Day " : " Days ") : "");
+        break;
+    }
+    return date_string;
+}
+
+function getYearFromAge(dateString) {
+    var dateStr = getAge(dateString);
+    return dateStr.split(' ')[0];
+}
+
+function changeStringToRequiredPtn(str) {
+    var parts = str.split('_');
+    if (parts.length == 1) {
+        return str.charAt(0).toUpperCase() + (str.slice(1)).toLowerCase();
+    } else if (parts.length == 2) {
+        return parts[0].charAt(0).toUpperCase() + (parts[0].slice(1)).toLowerCase() + " " + parts[1].toLowerCase();
+    } else {
+        return str;
+    }
+}
+
+function showDocuments(type) {
+    if (type == "Assumptions") {
+        $('#commonModalTitle').text("Assumptions");
+        $('#commonModalBodyContent').html(assumptions);
+    } else if (type == "Benefit_Summary") {
+        $('#commonModalTitle').text("Benefit Summary");
+        $('#commonModalBodyContent').html(benefitSummary);
+    } else if (type == "T&C") {
+        $('#commonModalTitle').text("T's & C's");
+        $('#commonModalBodyContent').html(TandC);
+    } else if (type == "Outbound_Script") {
+        $('#commonModalTitle').text("Outbound script");
+        $('#commonModalBodyContent').html(outboundScript);
+    } else if (type == "30_Day_Script") {
+        $('#commonModalTitle').text("30 day script");
+        $('#commonModalBodyContent').html(thirtyDayScript);
+    } else if (type == "2_Year_N_Tests") {
+        $('#commonModalTitle').text("2 year and negative tests");
+        $('#commonModalBodyContent').html(twoYearAndNegativeTests);
+    }
+    $('#commonModal').modal('show');
+}
+
+function hideTabs(showCount) {
+    $("li[id*='mo-tab-']").each(function (index) {
+        index++;
+        if (index > showCount) {
+            if (!$(this).hasClass("d-none")) {
+                $(this).addClass("d-none");
+            }
+        }
+    });
+}
+
+function calulatePetAge(dob) {
+    var dob = dob;
+    if (typeof dob == "undefined" || dob == null || dob == "") {
+        return "";
+    }
+    if (dob.split("/").length == 1) {
+        dob = "01/01/" + dob;
+    }
+    if (dob.split("/").length == 2) {
+        dob = "01/" + dob;
+    }
+    return concat(getAge(dob)," and ");
+}
+
+function concat(age, str) {
+    var list = age.trim().split(" ");
+    var age_;
+    switch (list.length) {
+        case 6:
+            age_ = list[0].concat(" ").concat(list[1]).concat(str).concat(list[2]).concat(" ").concat(list[3]);
+            break;
+        case 4:
+            age_ = list[0].concat(" ").concat(list[1]).concat(str).concat(list[2]).concat(" ").concat(list[3]);
+            break;
+        case 2:
+            age_ = list[0].concat(" ").concat(list[1]);
+    }
+    return age_.toLowerCase();
+}

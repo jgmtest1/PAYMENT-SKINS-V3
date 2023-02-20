@@ -1,0 +1,541 @@
+$(document).ready(function () {
+    $.validator.addMethod(
+        "namePtn",
+        function (value, element) {
+            var re = /^[a-zA-Z0-9\xc0-\xd6()\/\s\.,'\-]*$/;
+            var r = /^[0-9]+$/;
+            return this.optional(element) || re.test(value);
+        },
+        $.validator.messages.namePtn
+    );
+    $.validator.addMethod(
+        "namePtn1",
+        function (value, element) {
+            return this.optional(element) || alphnumericSpace(value);
+        },
+        $.validator.messages.namePtn1
+    );
+
+    $.validator.addMethod(
+        "maxLengthForPetName",
+        function (value, element) {
+            return value.length <= 100
+        },
+        "Pet name can not be more than 100 characters"
+    );
+
+    $.validator.addMethod("minLengthForPetName", function (value, element) {
+        if (value != '') {
+            if (value.length >= 1) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }, "Please enter at least 2 characters for pet name");
+
+    $.validator.addMethod(
+        "lengthCheck",
+        function (value, element) {
+            if (value.length >= 1 && value.length <= 49) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+        $.validator.messages.lengthCheck
+    );
+
+    $.validator.addMethod(
+        "stsLengthCheck",
+        function (value, element) {
+            if (value.length >= 1 && value.length <= 50) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+        $.validator.messages.stsLengthCheck
+    );
+
+    $.validator.addMethod(
+        "addressPtn",
+        function (value, element) {
+            var re = /^[a-zA-Z0-9\xc0-\xd6()\/\s\.,'\-]*$/;
+            return this.optional(element) || re.test(value);
+        },
+        "Please remove invalid characters"
+    );
+
+    $.validator.addMethod(
+        "postCodePtn",
+        function (value, element) {
+            var re = /^(?:(?:[A-PR-UWYZa-pr-uwyz][0-9]{1,2}|[A-PR-UWYZa-pr-uwyz][A-HK-Ya-hk-y][0-9]{1,2}|[A-PR-UWYZa-pr-uwyz][0-9][A-HJKPSTUWa-hjkpstuw]|[A-PR-UWYZa-pr-uwyz][A-HK-Ya-hk-y][0-9][ABEHMNPRV-Yabehmnprv-y]) ?[0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}|GIR 0AA)$/;
+            return this.optional(element) || re.test(value);
+        },
+        "Please enter valid postcode"
+    );
+
+    $.validator.addMethod(
+        "datePtn",
+        function (value, element) {
+            var re = /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/;
+            return this.optional(element) || re.test(value);
+        },
+        "Please enter date in valid format (DD/MM/YYYY)"
+    );
+
+    $.validator.addMethod(
+        "telephoneNoPtn",
+        function (value, element) {
+            var re = /^(\+?\s*\d\s*){11,12}$/;
+            var isNotMandatory = $('#isNotMandatory').val();
+            if(isNotMandatory == 'true'){
+                return (this.optional(element) == true) || re.test(value) || value.length <= 0;
+            }else{
+                return this.optional(element) || re.test(value);
+            }
+        },
+        "Please enter a valid telephone number"
+    );
+
+    $.validator.addMethod(
+        "notMandatory",
+        function(value, element){
+            var telephone2= $('#telephone2').val();
+            var isNotMandatory = $('#isNotMandatory').val();
+            return !(isNotMandatory == 'true' && value == "" && telephone2.length > 0);
+        }, 
+        "Please enter valid telephone number 1 before telephone number 2"
+    )
+
+    $.validator.addMethod("under18yearOld", function (value, element) {
+        var date = value.split(/[-/]+/);
+        var minDate = moment().add(-18, 'years').format('YYYY-MM-DD').toString();
+        value = moment([date[2], parseInt(date[1]) - 1, date[0]]).format('YYYY-MM-DD').toString();
+        var res = moment(value).isSameOrBefore(minDate) ? true : false;
+        return res;
+    }, "You must be 18 years or over to buy this insurance");
+
+    $('#mainPolicyHolderDetailsForm').validate({
+        rules: {
+            'firstName': {
+                namePtn: true,
+                lengthCheck: true
+            },
+            'lastName': {
+                namePtn: true,
+                lengthCheck: true
+            },
+            'email': {
+                email: true
+            },
+            'firstLineOfAddress': {
+                addressPtn: true
+            },
+            'secondLineOfAddress': {
+                addressPtn: true
+            },
+            'city': {
+                addressPtn: true
+            },
+            'telephone1': {
+                telephoneNoPtn: true,
+                notMandatory: true
+            },
+            'telephone2': {
+                telephoneNoPtn: true  
+            },
+            'dateOfBirth': {
+                under18yearOld: true
+            },
+            'postCode': {
+                postCodePtn: true
+            }
+        },
+        showErrors: function (errorMap, errorList) {
+            $.each(this.successList, function (index, value) {
+                hideErrorPopup($(value));
+            });
+            return $.each(errorList, function (index, value) {
+                var containerClass = false;
+                if (value.element.classList.contains('hasDatepicker')) {
+                    containerClass = '.showdpError';
+                }
+                createErrorPopup($(value.element), value.message, containerClass);
+                showErrorPopup($(value.element));
+            });
+        },
+        messages: {
+            'title': {
+                required: 'Please select the policy holder’s title from the list above'
+            },
+            'firstName': {
+                required: 'Please enter the policy holder’s first name',
+                namePtn: 'Please supply a valid first name',
+                lengthCheck: 'Please enter for first name at least 1 characters and no more than 49 characters'
+            },
+            'lastName': {
+                required: 'Please enter the policy holder’s last name',
+                namePtn: 'Please supply a valid surname',
+                lengthCheck: 'Please enter for surname at least 1 characters and no more than 49 characters.'
+            },
+            'country': {
+                required: 'Please enter a valid country'
+            },
+            'postCode': {
+                required: 'Please enter the policy holder’s postcode'
+            },
+            'dateOfBirth': {
+                required: 'Please enter the policy holder’s date of birth'
+            },
+            'firstLineOfAddress': {
+                required: 'Please enter the first line of the policy holder’s address'
+            },
+            'city': {
+                required: 'Please enter the policy holder’s town of residence'
+            },
+            'telephone1': {
+                required: 'Please enter the policy holder’s phone number'
+            },
+            'tick_to_confirm_pet_details': {
+                required: 'This field is required'
+            },
+            'email': {
+                email: 'Please enter valid email'
+            }
+        }
+    });
+
+    $('#petDetailsForm').validate({
+        showErrors: function (errorMap, errorList) {
+            $.each(this.successList, function (index, value) {
+                hideErrorPopup($(value));
+            });
+            return $.each(errorList, function (index, value) {
+                var containerClass = false;
+                if (value.element.classList.contains('hasDatepicker')) {
+                    containerClass = '.showdpError';
+                }
+                createErrorPopup($(value.element), value.message, containerClass);
+                showErrorPopup($(value.element));
+            });
+        },
+        messages: {
+            'noOfPets': {
+                required: 'Please select a number of pets to be insured'
+            },
+            'namePet1': {
+                required: 'Please enter a pet name'
+            },
+            'typePet1': {
+                required: 'Please enter a pet type'
+            },
+            'AssumptionPet1': {
+                required: 'Please agree to assumptions'
+            },
+            'genderPet1': {
+                required: 'Please select a pet gender'
+            },
+            'breedPet1': {
+                required: 'Please select a breed'
+            },
+            'amountPet1': {
+                required: 'Please select a amount which pay or donate'
+            },
+            'spayedOrNotPet1': {
+                required: 'Please select a pet is spayed or not'
+            },
+            'microChippedOrNotPet1': {
+                required: 'Please select a pet been microchipped or not'
+            },
+            'dobPet1': {
+                required: 'Please select a date of birth'
+            }
+        }
+    });
+
+    $('#policyDetailsForm').validate({
+        rules: {
+            'policyStartDate': {
+                inBetween30Days: true
+            }
+        },
+        showErrors: function (errorMap, errorList) {
+            $.each(this.successList, function (index, value) {
+                hideErrorPopup($(value));
+            });
+            return $.each(errorList, function (index, value) {
+                var containerClass = false;
+                if (value.element.classList.contains('hasDatepicker')) {
+                    containerClass = '.showdpError';
+                }
+                createErrorPopup($(value.element), value.message, containerClass);
+                showErrorPopup($(value.element));
+            });
+        },
+        messages: {
+            'policyStartDate': {
+                required: 'Please select the policy start date'
+            },
+            'vetFeePet1': {
+                required: 'Please select the vet fee cover'
+            },
+            'vetFeePet2': {
+                required: 'Please select the vet fee cover'
+            },
+            'vetFeePet3': {
+                required: 'Please select the vet fee cover'
+            },
+            'vetFeePet4': {
+                required: 'Please select the vet fee cover'
+            },
+            'vetFeePet5': {
+                required: 'Please select the vet fee cover'
+            },
+            'vetFeePet6': {
+                required: 'Please select the vet fee cover'
+            },
+            'vetFeePet7': {
+                required: 'Please select the vet fee cover'
+            },
+            'vetFeePet8': {
+                required: 'Please select the vet fee cover'
+            },
+            'excessPet1': {
+                required: 'Please select the excess cover'
+            },
+            'excessPet2': {
+                required: 'Please select the excess cover'
+            },
+            'excessPet3': {
+                required: 'Please select the excess cover'
+            },
+            'excessPet4': {
+                required: 'Please select the excess cover'
+            },
+            'excessPet5': {
+                required: 'Please select the excess cover'
+            },
+            'excessPet6': {
+                required: 'Please select the excess cover'
+            },
+            'excessPet7': {
+                required: 'Please select the excess cover'
+            },
+            'excessPet8': {
+                required: 'Please select the excess cover'
+            },
+            'billSharePet1': {
+                required: 'Please select the bill share'
+            },
+            'billSharePet2': {
+                required: 'Please select the bill share'
+            },
+            'billSharePet3': {
+                required: 'Please select the bill share'
+            },
+            'billSharePet4': {
+                required: 'Please select the bill share'
+            },
+            'billSharePet5': {
+                required: 'Please select the bill share'
+            },
+            'billSharePet6': {
+                required: 'Please select the bill share'
+            },
+            'billSharePet7': {
+                required: 'Please select the bill share'
+            },
+            'billSharePet8': {
+                required: 'Please select the bill share'
+            }
+        }
+    });
+
+    $('#moOrganiserForm').validate({
+        rules: {
+            'firstName': {
+                namePtn: true,
+                stsLengthCheck: true
+            },
+            'surname': {
+                namePtn: true,
+                stsLengthCheck: true
+            },
+            'email': {
+                email: true
+            },
+            'firstLineOfAddress': {
+                addressPtn: true
+            },
+            'secondLineOfAddress': {
+                addressPtn: true
+            },
+            'city': {
+                addressPtn: true
+            },
+            'telephone': {
+                telephoneNoPtn: true
+            },
+            'dateOfBirth': {
+                under18yearOld: true
+            },
+            'postCode': {
+                postCodePtn: true
+            }
+        },
+        showErrors: function (errorMap, errorList) {
+            $.each(this.successList, function (index, value) {
+                hideErrorPopup($(value));
+            });
+            return $.each(errorList, function (index, value) {
+                var containerClass = false;
+                if (value.element.classList.contains('hasDatepicker')) {
+                    containerClass = '.showdpError';
+                }
+                createErrorPopup($(value.element), value.message, containerClass);
+                showErrorPopup($(value.element));
+            });
+        },
+        messages: {
+            'title': {
+                required: 'Please select the customer’s title from the list above'
+            },
+            'firstName': {
+                required: 'Please enter the customer’s first name',
+                namePtn: 'Please supply a valid first name',
+                stsLengthCheck: 'Please enter for first name at least 1 characters and no more than 50 characters'
+            },
+            'surname': {
+                required: 'Please enter the customer’s last name',
+                namePtn: 'Please supply a valid surname',
+                stsLengthCheck: 'Please enter for surname at least 1 characters and no more than 50 characters.'
+            },
+            'country': {
+                required: 'Please enter a valid country'
+            },
+            'postCode': {
+                required: 'Please enter the customer’s postcode'
+            },
+            'dateOfBirth': {
+                required: 'Please enter customer’s date of birth'
+            },
+            'firstLineOfAddress': {
+                required: 'Please enter the first line of the customer’s address'
+            },
+            'city': {
+                required: 'Please enter the customer’s town of residence'
+            },
+            'telephone': {
+                required: 'Please enter the customer’s phone number'
+            },
+            'email': {
+                email: 'Please enter valid email'
+            }
+        }
+    });
+
+});
+
+$('#petPaymentForm').validate({
+    showErrors: function (errorMap, errorList) {
+        $.each(this.successList, function (index, value) {
+            hideErrorPopup($(value));
+        });
+        return $.each(errorList, function (index, value) {
+            var containerClass = false;
+            if (value.element.classList.contains('hasDatepicker')) {
+                containerClass = '.showdpError';
+            }
+            createErrorPopup($(value.element), value.message, containerClass);
+            showErrorPopup($(value.element));
+        });
+    },
+    messages: {
+        /*'cardType': {
+            required: 'Please select the card type from the list above'
+        },*/
+        'confirmChange': {
+            required: 'Please confirm the changes you made'
+        }
+    }
+});
+
+createErrorPopup = function (element, content, container) {
+    var _popover;
+    if (element.hasClass('hasDatepicker')) {
+        container = element.closest('div').find('#dateError');
+    }
+    _popover = element.popover({
+        trigger: "manual",
+        container: container,
+        placement: "bottom",
+        content: function () {
+            return content;
+        },
+        template: "<div class=\"popover error-alignment\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-body\"></div></div></div>"
+    }).on("focus", function () {
+        if (element[0].classList.contains('hasDatepicker')) {
+            element.css("position", "relative");
+            return element.popover("hide");
+        }
+    }).on("inserted.bs.popover", function () {
+        if (element[0].classList.contains('hasDatepicker') && document.getElementById("mainPolicyHolderDetailsForm") != null && document.getElementById("mainPolicyHolderDetailsForm").contains(element[0])) {
+            (element.parent().find('div.popover.error-alignment')).insertAfter(element);
+        }
+    })
+};
+
+var showErrorPopup = function (element) {
+    return element.popover("show");
+};
+
+var hideErrorPopup = function (element) {
+    return element.popover("hide");
+};
+
+var destroyErrorPopup = function (element) {
+    return element.popover("destroy");
+};
+
+var changeErrorMessage = function (element, message) {
+    if (element[0].nextElementSibling != null && element[0].nextElementSibling.childNodes.length >= 2) {
+        if (element[0].nextElementSibling.childNodes[1].childNodes[0].innerText != message) {
+            element[0].nextElementSibling.childNodes[1].childNodes[0].innerText = message;
+        }
+    }
+}
+
+alphnumericSpace = function (value) {
+    var regex = /^[0-9]+$/;
+    var arrvalue = value.split(/[\s-]+/);
+    var count = 0;
+    arrvalue.forEach(e => {
+        if (regex.test(e)) {
+            count = count + 1;
+        }
+    });
+    return count == 0 || count == 1 && regex.test(arrvalue[0])
+};
+
+$('#policyStartDate').validate({
+    rules: {
+        'policyStartDate': {
+            inBetween30Days: true
+        }
+    },
+    showErrors: function (errorMap, errorList) {
+        $.each(this.successList, function (index, value) {
+            hideErrorPopup($(value));
+        });
+        return $.each(errorList, function (index, value) {
+            var containerClass = false;
+            if (value.element.classList.contains('hasDatepicker')) {
+                containerClass = '.showdpError';
+            }
+            createErrorPopup($(value.element), value.message, containerClass);
+            showErrorPopup($(value.element));
+        });
+    }
+});

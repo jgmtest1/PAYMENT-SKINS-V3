@@ -1,0 +1,63 @@
+$(document).ready(function () {
+
+    // Toggle change up and dow arrow
+    $(".collapse").on('show.bs.collapse', function () {
+        $(this).prev(".card-header").find(".fal").removeClass("fa-angle-down").addClass("fa-angle-up");
+    }).on('hide.bs.collapse', function () {
+        $(this).prev(".card-header").find(".fal").removeClass("fa-angle-up").addClass("fa-angle-down");
+    });
+
+    //Price presentation collapse
+    $(".collapse").on('show.bs.collapse', function () {
+        $(this).prev(".panel-header").find(".fal").removeClass("fa-angle-down").addClass("fa-angle-up");
+    }).on('hide.bs.collapse', function () {
+        $(this).prev(".panel-header").find(".fal").removeClass("fa-angle-up").addClass("fa-angle-down");
+    });
+
+    //Price presentation collapse
+    $(".collapseContent").on('show.bs.collapse', function () {
+        $(this).prev(".tr-toggle").find(".fas").removeClass("fa-chevron-right").addClass("fa-chevron-down");
+    }).on('hide.bs.collapse', function () {
+        $(this).prev(".tr-toggle").find(".fas").removeClass("fa-chevron-down").addClass("fa-chevron-right");
+    });
+
+    $('.search-dob-date-picker').each(function () {
+        $(this).datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "1900:c",
+            dateFormat: 'dd/mm/yy'
+        });
+    });
+
+    $('#startDateSearch').datepicker({
+        maxDate: '0',
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: 'dd-mm-yy'
+    });
+
+    $('#endDateSearch').datepicker({
+        maxDate: '0',
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: 'dd-mm-yy'
+    });
+
+    //modal enforces focus on itself --- Date picker on modal issue
+    $.fn.modal.Constructor.prototype._enforceFocus = function () {
+    };
+
+    $('.navbar-toggler').click(function () {
+        $('.content-wrapper .panel-header').toggleClass('side');
+    });
+
+    $('.page-time-search-date-picker').each(function () {
+        $(this).datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "1900:c",
+            dateFormat: 'dd/mm/yy'
+        });
+    });
+});

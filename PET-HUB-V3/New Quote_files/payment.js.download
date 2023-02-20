@@ -1,0 +1,696 @@
+$(document).ready(function() {
+    
+    $("#apply").click(function() {
+      saveQuoteAttributionAgent();
+      $('#agentName-dpd').attr('disabled', true);
+      $(this).addClass("d-none");
+      $("#apply-error").hide();
+    });
+
+    if (isMta) {
+        $("#paymentAuthoritySection").removeClass('d-none');
+        $("#paymentMethodSection").removeClass('d-none');
+        if(showPaymentDateChangePopUp){
+           $("#paymentDaySection").removeClass('d-none');
+           setPaymentDateDropDownValue();
+           getRegularPaymentDays();
+           if(mainTreeObj.quote.info.paymentMethod == "DIRECT_DEBIT"){
+               $("#paymentDateFirstDateDes").html("When would you like your first payment to be taken? Please note that it may take up to 5 working days to process your first payment.");
+               $("#paymentDaterRegularDateDes").html("We'll take the first payment on " + formattedUIPolicyStartDate + ", but you can choose a date between 1st and 28th for us to take the next month and following months’ payments");
+           } else{
+               $("#paymentDateFirstDateDes").html("When would you like your first payment to be taken?");
+               $("#paymentDaterRegularDateDes").html("We'll take the first payment on " + formattedUIPolicyStartDate + ", but you can choose a date between 1st and 31st for us to take the next month and following months’ payments");
+           }
+        }
+    } else {
+        let isPolicyNumberAlreadyHave = Object.values(mainTreeObj).every(value => {
+        if (mainTreeObj.policy === null || mainTreeObj.policy === undefined || mainTreeObj.policy === '' || mainTreeObj.policy.policyNumber === null || mainTreeObj.policy.policyNumber == 'undefined') {
+          return true;
+        }
+          return false;
+        });
+        if(isPolicyNumberAlreadyHave){
+            setPaymentDateDropDownValue();
+        }
+        if(mainTreeObj.quote.info.paymentMethod !=null && mainTreeObj.quote.info.paymentType=="MONTHLY"){
+             $('#payMonth').prop('checked', true);
+        } else if(mainTreeObj.quote.info.paymentMethod !=null && mainTreeObj.quote.info.paymentType=="FULL"){
+             $('#payFull').prop('checked', true);
+        }
+        if(mainTreeObj.quote.info.paymentMethod !=null && (mainTreeObj.quote.info.paymentMethod=="DIRECT_DEBIT" || mainTreeObj.quote.info.paymentMethod=="CARD")){
+            $("#paymentMethodSection").removeClass('d-none');
+            $("#paymentAuthoritySection").removeClass('d-none');
+            if(mainTreeObj.quote.info.paymentMethod=="DIRECT_DEBIT"){
+                $("#paymentMethodSection").removeClass('d-none');
+                if(mainTreeObj.quote.info.paymentType=="MONTHLY"){
+                    $("#paymentDaySection").removeClass('d-none');
+                    $("#regularPaymentDaySelect").val(mainTreeObj.quote.info.regularPaymentDay);
+                    if($("#payment-date-option-1").val()==mainTreeObj.quote.info.firstPaymentDate){
+                        $("#payment-date-option-1").prop("checked", true);
+                    } else if($("#payment-date-option-2").val()==mainTreeObj.quote.info.firstPaymentDate){
+                        $("#payment-date-option-2").prop("checked", true);
+                    }
+                    if($('input[name="paymentAuthoritySelection1"]:checked').val()!="Y" && $('input[name="paymentAuthoritySelection2"]:checked').val()!="Y"){
+                      $('#initiate-payment-btn').attr('disabled', false);
+                      $('#ar-quote-update-btn').attr('disabled', false);
+                    }
+                } else{
+                    $("#paymentDaySection").addClass('d-none');
+                }
+                $("#card-initiate-text").addClass('d-none');
+                $("#direct-debit-initiate-text").removeClass('d-none');
+                $('#payDirectDebit').prop('checked', true);
+                $("#paymentAuthoritySelection1").val("Y");
+                if(directDebitPaymentAuthorityQ1=="Y"){
+                    $('#paymentAuthoritySelection1Yes').prop('checked', true);
+                    $('#paymentAuthoritySelection1No').prop('checked', false);
+                } else if(directDebitPaymentAuthorityQ1=="N"){
+                    $('#paymentAuthoritySelection1Yes').prop('checked', false);
+                    $('#paymentAuthoritySelection1No').prop('checked', true);
+                }
+                if(directDebitPaymentAuthorityQ2=="Y"){
+                    $('#paymentAuthoritySelection2Yes').prop('checked', true);
+                    $('#paymentAuthoritySelection2No').prop('checked', false);
+                } else if(directDebitPaymentAuthorityQ2=="N"){
+                    $('#paymentAuthoritySelection2Yes').prop('checked', false);
+                    $('#paymentAuthoritySelection2No').prop('checked', true);
+                }
+                if(directDebitPaymentAuthorityQ3=="Y"){
+                    $('#paymentAuthoritySelection3Yes').prop('checked', true);
+                    $('#paymentAuthoritySelection3No').prop('checked', false);
+                } else if(directDebitPaymentAuthorityQ3=="N"){
+                    $('#paymentAuthoritySelection3Yes').prop('checked', false);
+                    $('#paymentAuthoritySelection3No').prop('checked', true);
+                }
+            } else if(mainTreeObj.quote.info.paymentMethod=="CARD"){
+                $("#paymentDaySection").removeClass('d-none');
+                $("#card-initiate-text").removeClass('d-none');
+                $("#direct-debit-initiate-text").addClass('d-none');
+                $('#payCard').prop('checked', true);
+                if(mainTreeObj.quote.info.paymentType=="MONTHLY"){
+                    $("#paymentDaySection").removeClass('d-none');
+                    $("#regularPaymentDaySelect").val(mainTreeObj.quote.info.regularPaymentDay);
+                    if($("#payment-date-option-1").val()==mainTreeObj.quote.info.firstPaymentDate){
+                        $("#payment-date-option-1").prop("checked", true);
+                    } else if($("#payment-date-option-2").val()==mainTreeObj.quote.info.firstPaymentDate){
+                        $("#payment-date-option-2").prop("checked", true);
+                    }
+                } else{
+                    $("#paymentDaySection").addClass('d-none');
+                }
+            }
+        } else{
+
+          $("#paymentMethodSection").addClass('d-none');
+        }
+    }
+
+     $('input[type=radio][name="payType"]').change(function () {
+        $("#paymentMethodSection").removeClass('d-none');
+        if($('input[name="payType"]:checked').val()=="MONTHLY" && (typeof $('input[name="payMethod"]:checked').val() != 'undefined' && ($('input[name="payMethod"]:checked').val() == 'CARD' || $('input[name="payMethod"]:checked').val() == 'DIRECT_DEBIT') )){
+            $("#paymentDaySection").removeClass('d-none');
+            getRegularPaymentDays();
+        }
+        if($('input[name="payType"]:checked').val()=="FULL" && (typeof $('input[name="payMethod"]:checked').val() != 'undefined' && ($('input[name="payMethod"]:checked').val() == 'CARD' || $('input[name="payMethod"]:checked').val() == 'DIRECT_DEBIT') )){
+           $("#paymentDaySection").addClass('d-none');
+           if(typeof $('input[name="payMethod"]:checked').val() == 'undefined'){
+               $("#paymentAuthoritySection").addClass('d-none');
+           }
+
+        }
+    });
+
+    $('input[type=radio][name="payMethod"]').change(function () {
+        $("#paymentAuthoritySection").removeClass('d-none');
+        if($('input[name="payType"]:checked').val()=="MONTHLY" && (typeof $('input[name="payMethod"]:checked').val() != 'undefined' && ($('input[name="payMethod"]:checked').val() == 'CARD') || $('input[name="payMethod"]:checked').val() == 'DIRECT_DEBIT')){
+            $("#paymentDaySection").removeClass('d-none');
+            getRegularPaymentDays();
+        } else{
+            $("#paymentDaySection").addClass('d-none');
+        }
+        if($('input[name="payMethod"]:checked').val()=="CARD"){
+            $("#cardTypeSelection").removeClass('d-none');
+            $("#card-initiate-text").removeClass('d-none');
+            $("#direct-debit-initiate-text").addClass('d-none');
+            $("#paymentDateFirstDateDes").html("When would you like your first payment to be taken?");
+            $("#paymentDaterRegularDateDes").html("We'll take the first payment on " + formattedUIPolicyStartDate + ", but you can choose a date between 1st and 31st for us to take the next month and following months’ payments");
+            $('#initiate-payment-btn').attr('disabled', false);
+        } else if($('input[name="payMethod"]:checked').val()=="DIRECT_DEBIT"){
+            $("#cardTypeSelection").addClass('d-none');
+            $("#card-initiate-text").addClass('d-none');
+            $("#direct-debit-initiate-text").removeClass('d-none');
+            $("#paymentDateFirstDateDes").html("When would you like your first payment to be taken? Please note that it may take up to 5 working days to process your first payment.");
+            $("#paymentDaterRegularDateDes").html("We'll take the first payment on " + formattedUIPolicyStartDate + ", but you can choose a date between 1st and 28th for us to take the next month and following months’ payments");
+            $('#initiate-payment-btn').attr('disabled', true);
+            if($('input[name="paymentAuthoritySelection1"]:checked').val()=="Y" && $('input[name="paymentAuthoritySelection2"]:checked').val()=="Y" && ($('input[name="paymentAuthoritySelection3"]:checked').val()=="N" || $('input[name="paymentAuthoritySelection3"]:checked').val()=="Y")){
+                $('#initiate-payment-btn').attr('disabled', false);
+            }
+        }
+
+    });
+
+    if(isMta != null && isMta=="false" && mainTreeObj != null && mainTreeObj.policy != null && mainTreeObj.policy.policyNumber != null){
+         $("#paymentMethodSection").removeClass('d-none');
+         $("#paymentDaySection").addClass('d-none');
+         $("#paymentAuthoritySection").removeClass('d-none');
+         if(typeof mainTreeObj.quote.info.paymentMethod != 'undefined' && mainTreeObj.quote.info.paymentMethod != null  && mainTreeObj.quote.info.paymentMethod == 'DIRECT_DEBIT'){
+            $("#card-initiate-text").addClass('d-none');
+            $("#direct-debit-initiate-text").removeClass('d-none');
+         } else {
+            $("#direct-debit-initiate-text").addClass('d-none');
+            $("#card-initiate-text").removeClass('d-none');
+         }
+
+    } else if(isMta != null && isMta=="true"){
+        $("#paymentMethodSection").removeClass('d-none');
+        $("#paymentAuthoritySection").removeClass('d-none');
+        if(showPaymentDateChangePopUp){
+           $("#paymentDaySection").removeClass('d-none');
+        }
+    }
+
+    $('#supervisorAuthentication').on('shown.bs.modal', function () {
+        $('#fail-authentication').hide();
+    });
+
+    $("#username, #password").on( "keyup", function() {
+        $('#fail-authentication').hide();
+    });
+
+    // $('#ar-quote-update-btn').attr('disabled', true);
+
+    $('input[type=radio][name="paymentAuthoritySelection1"]').change(function () {
+        if($('input[name="paymentAuthoritySelection1"]:checked').val()=="N" && $('input[name="paymentAuthoritySelection2"]:checked').val()=="Y"){
+            $('#accountHolderSetupAlertContent').html("Unfortunately the customer needs to be the account holder to set up a direct debit");
+            $('#accountHolderSetupAlert').modal('show');
+            $('#initiate-payment-btn').attr('disabled', true);
+        }
+        if($('input[name="paymentAuthoritySelection1"]:checked').val()=="N" && $('input[name="paymentAuthoritySelection2"]:checked').val()=="N"){
+            $('#accountHolderSetupAlertContent').html("Unfortunately the customer needs to be the account holder and authorised to set up a direct debit");
+            $('#accountHolderSetupAlert').modal('show');
+            $('#initiate-payment-btn').attr('disabled', true);
+        }
+        if($('input[name="paymentAuthoritySelection1"]:checked').val()=="Y" && $('input[name="paymentAuthoritySelection2"]:checked').val()=="N"){
+            $('#accountHolderSetupAlertContent').html("Unfortunately the customer needs to be authorised to set up a direct debit");
+            $('#accountHolderSetupAlert').modal('show');
+            $('#initiate-payment-btn').attr('disabled', true);
+        }
+        if($('input[name="paymentAuthoritySelection1"]:checked').val()=="Y" && $('input[name="paymentAuthoritySelection2"]:checked').val()=="Y" && ($('input[name="paymentAuthoritySelection3"]:checked').val()=="N" || $('input[name="paymentAuthoritySelection3"]:checked').val()=="Y")){
+            $('#initiate-payment-btn').attr('disabled', false);
+        }
+    });
+
+    $('input[type=radio][name="paymentAuthoritySelection2"]').change(function () {
+        if($('input[name="paymentAuthoritySelection1"]:checked').val()=="N" && $('input[name="paymentAuthoritySelection2"]:checked').val()=="Y"){
+            $('#accountHolderSetupAlertContent').html("Unfortunately the customer needs to be the account holder to set up a direct debit");
+            $('#accountHolderSetupAlert').modal('show');
+            $('#initiate-payment-btn').attr('disabled', true);
+        }
+        if($('input[name="paymentAuthoritySelection1"]:checked').val()=="N" && $('input[name="paymentAuthoritySelection2"]:checked').val()=="N"){
+            $('#accountHolderSetupAlertContent').html("Unfortunately the customer needs to be the account holder and authorised to set up a direct debit");
+            $('#accountHolderSetupAlert').modal('show');
+            $('#initiate-payment-btn').attr('disabled', true);
+        }
+        if($('input[name="paymentAuthoritySelection1"]:checked').val()=="Y" && $('input[name="paymentAuthoritySelection2"]:checked').val()=="N"){
+            $('#accountHolderSetupAlertContent').html("Unfortunately the customer needs to be authorised to set up a direct debit");
+            $('#accountHolderSetupAlert').modal('show');
+            $('#initiate-payment-btn').attr('disabled', true);
+        }
+
+        if($('input[name="paymentAuthoritySelection1"]:checked').val()=="Y" && $('input[name="paymentAuthoritySelection2"]:checked').val()=="Y" && ($('input[name="paymentAuthoritySelection3"]:checked').val()=="N" || $('input[name="paymentAuthoritySelection3"]:checked').val()=="Y")){
+            $('#initiate-payment-btn').attr('disabled', false);
+        }
+    });
+
+    if($('input[name="paymentAuthoritySelection1"]:checked').val()=="N" && $('input[name="paymentAuthoritySelection2"]:checked').val()=="N" && $('input[name="paymentAuthoritySelection3"]:checked').val()=="N"){
+        $('#initiate-payment-btn').attr('disabled', true);
+    }
+
+    $('input[type=radio][name="paymentAuthoritySelection3"]').change(function () {
+         if($('input[name="paymentAuthoritySelection1"]:checked').val()=="Y" && $('input[name="paymentAuthoritySelection2"]:checked').val()=="Y"){
+           $('#initiate-payment-btn').attr('disabled', false);
+         }
+    });
+
+    $("input[name='firstPaymentDateSelect']").change(function(){
+        getRegularPaymentDays();
+    });
+    if($("[name='firstPaymentDateSelect']").is(':checked') && $("input[name='payType']:checked").val() == 'MONTHLY'){
+        getRegularPaymentDays();
+    }
+
+    if(ddActive != null && ddActive=="true"){
+        $("#payDirectDebitDiv").removeClass('d-none');
+    } else {
+        let isPolicyPurchase = mainTreeObj.policy != null && mainTreeObj.policy.policyNumber != null && mainTreeObj.policy.basePolicyNumber != null? true: false;
+        let isDdPolicy = mainTreeObj.quote.info.paymentMethod !=null && mainTreeObj.quote.info.paymentMethod=="CARD"? true: false;
+        if(!isPolicyPurchase){
+            $("#payDirectDebitDiv").addClass('d-none');
+        } else if(isPolicyPurchase && isDdPolicy){
+            $("#payDirectDebitDiv").addClass('d-none');
+        }
+        if(typeof $('input[name="payMethod"]:checked').val() != 'undefined' && $('input[name="payMethod"]:checked').val() == 'DIRECT_DEBIT' && !isPolicyPurchase){
+            $("#paymentAuthoritySection").addClass('d-none');
+            if(mainTreeObj.quote.info.paymentMethod !=null && mainTreeObj.quote.info.paymentMethod=="DIRECT_DEBIT"){
+                 $('#payDirectDebit').prop('checked', false);
+            }
+        }
+    }
+
+});
+
+function proceed() {
+    var form = $('#petPaymentForm');
+    $("#loaderModal").modal("show");
+    $.ajax({
+        type: form.attr('method'),
+        data: {
+            action: 'user-authentication',
+            domainType: $('#domainType').val(),
+            productType: $('#productType').val(),
+            username: $('#username').val(),
+            password: $('#password').val(),
+            personReference: $('#personReference').val(),
+            quoteReference: $('#quoteReference').val()
+        },
+        url: form.attr('action'),
+        success: function (response) {
+            if (response.success == true) {
+                if (response.hasUserPrivilege == true) {
+                    $("#supervisorAuthentication").modal("hide");
+                    $("#apply").removeClass("d-none");
+                    $('#agentName-dpd').attr('disabled', false);
+                } else {
+                    $('#authenticationFailedError').html("Given User hasn't Quote Attribution privilege.");
+                    $('#fail-authentication').show();
+                }
+            }
+            if (response.success == false) {
+                $('#authenticationFailedError').html(response.message);
+                $('#fail-authentication').show();
+                $('#agentName-dpd').attr('disabled', true);
+                if (!$("#apply").hasClass("d-none"))
+                    $("#apply").addClass("d-none");
+            }
+            $("#loaderModal").modal("hide");
+        },
+        error: function (response) {
+            $("#loaderModal").modal("hide");
+            $('#authenticationFailedError').html("Oops, Something went wrong. Please try again.");
+            $('#fail-authentication').show();
+        }
+    });
+    $("#apply-error").hide();
+}
+
+function validateInitiatePayment(action){
+    if(validatePayType() && validatePayMethod() && validateQuoteApply() && validateRegularPaymentDay() && $('#petPaymentForm').valid()) {
+        if(isMta && earliestCollectionDetails.paymentDateAdjusted && monthlyPriceDifference != 0 && earliestCollectionDetails.firstPaymentDate != earliestCollectionDetails.earliestCollectionDate){
+            $("#previousPaymentDate").html(earliestCollectionDetails.firstPaymentDate);
+            $("#newPaymentDate").html(earliestCollectionDetails.earliestCollectionDate);
+            $("#paymentDateAdjustedModal").modal('show');
+        } else {
+            initiatePayment(action);
+        }
+    }
+}
+
+function showDDMandate(){
+    $('#directDebitGuaranteeBody').html(directDebitGuaranteeScript);
+    $('#directDebitGuarantee').modal('show');
+}
+
+function initiatePayment(action) {
+    $("#paymentDateAdjustedModal").modal("hide");
+    $("#loaderModal").modal("show");
+    var form = $('#petPaymentForm');
+    var isOptOutAutoRenewal = $('#autoRenewal').is(':checked') ? 'Y' : 'N';
+    var confirmChanges = $('#confirm-changes').is(':checked') ? 'Y' : 'N';
+    var firstPaymentDate = $("[name='firstPaymentDateSelect']").is(':checked') ? $("[name='firstPaymentDateSelect']:checked").val() : "";
+    var regularPaymentDay = $("[name='regularPaymentDaySelect']").val() == null ? "" : $("[name='regularPaymentDaySelect']").val();
+    var paymentType = $("input[name='payType']:checked").val();
+    var paymentMethod = (isMta?mainTreeObj.quote.info.paymentMethod:$("input[name='payMethod']:checked").val());
+    var ddPaymentAuthoritySelection1 = $('input[name="paymentAuthoritySelection1"]:checked').val() == null ? "N" : $('input[name="paymentAuthoritySelection1"]:checked').val();
+    var ddPaymentAuthoritySelection2 = $('input[name="paymentAuthoritySelection2"]:checked').val() == null ? "N" : $('input[name="paymentAuthoritySelection2"]:checked').val();
+    var ddPaymentAuthoritySelection3 = $('input[name="paymentAuthoritySelection3"]:checked').val() == null ? "N" : $('input[name="paymentAuthoritySelection3"]:checked').val();
+    if (action == 'initiate-payment') {
+        ctalk.stopCtalkCallRecording();
+        if (quoteId != null) {
+            ctalk.updateQuoteDataInCtalk(quoteId);
+        }
+    }
+    $(':input:disabled').removeAttr('disabled');
+    $.ajax({
+        type: form.attr('method'),
+        url: form.attr('action'),
+        data: form.serialize() 
+                + '&action=' + action 
+                + '&isOptOutAutoRenewal=' + isOptOutAutoRenewal
+                + '&paymentType=' + paymentType 
+                + '&paymentMethod=' + paymentMethod 
+                + '&confirmChanges=' + confirmChanges 
+                + '&firstPaymentDate=' + firstPaymentDate 
+                + '&regularPaymentDay=' + regularPaymentDay 
+                + '&ddPaymentAuthoritySelection1=' + ddPaymentAuthoritySelection1 
+                + '&ddPaymentAuthoritySelection2=' + ddPaymentAuthoritySelection2 
+                + '&ddPaymentAuthoritySelection3=' + ddPaymentAuthoritySelection3,
+        success: function (response) {
+            $("#loaderModal").modal("hide");
+            if (action == 'initiate-payment') {
+                if(response.status == "fail"){
+                    $('#accountHolderSetupAlertContent').html(response.error);
+                    $('#accountHolderSetupAlert').modal('show');
+                } else{
+                    if (response.noUrlRedirection == true) {
+                        refreshPaymentViewAfterSuccess();
+                    } else {
+                        $('#paymentPageContent').html(response);
+                        $('#promoCodeApplyButton').attr('disabled', true);
+                        $('#promo_code').attr('disabled',true)
+                    }
+                }
+            } else {
+                window.location.reload();
+            }
+        },
+        error: function (response) {
+            $("#loaderModal").modal("hide");
+        }
+    });
+}
+
+function refreshPaymentViewAfterSuccess() {
+    $("#loaderModal").modal("show");
+    var form = $('#petPaymentForm');
+    $.ajax({
+        type: 'GET',
+        url: form.attr('action'),
+        data: form.serialize() + '&action=' + 'complete-payment-success',
+        success: function (response) {
+            $('#paymentPageContent').html(response);
+            $("#loaderModal").modal("hide");
+            window.location.reload();
+        },
+        error: function (response) {
+            $("#loaderModal").modal("hide");
+        }
+    });
+}
+
+function refreshPaymentViewAfterFailed(backToPaymentPage) {
+    $("#loaderModal").modal("show");
+    var form = $('#petPaymentForm');
+    $.ajax({
+        type: 'GET',
+        url: form.attr('action'),
+        data: form.serialize() + '&isPaymentFailed=' + 'true' + '&backBtn=' + backToPaymentPage,
+        success: function (response) {
+            $('#paymentPageContent').html(response);
+            $("#loaderModal").modal("hide");
+        },
+        error: function (response) {
+            $("#loaderModal").modal("hide");
+        }
+    });
+}
+
+function validatePayType() {
+    var isValid = true;
+    if (!$("input[name='payType']").is(':checked')) {
+        $('#paymentOptionErrorMessage').show();
+        isValid = false;
+    } else {
+        $('#paymentOptionErrorMessage').hide();
+        isValid = true;
+    }
+    return isValid;
+}
+
+function validatePayMethod() {
+    var isValid = false;
+    var payMethod;
+    if (isMta) {
+        if ($("#payMethod").val() != null) {
+            isValid = true;
+            payMethod = $("payMethod").val();
+        }
+    } else {
+        if ($("input[name='payMethod']").is(':checked')) {
+            isValid = true;
+            payMethod = $("input[name='payMethod']:checked").val();
+        }
+    }
+    if (!isValid) {
+        $('#paymentMethodErrorMessage').show();
+    } else {
+        $('#paymentMethodErrorMessage').hide();
+        if ("DIRECT_DEBIT" == payMethod) {
+            var mainPolicyHolderEmail = mainTreeObj.mainPolicyHolder.commMethods.find(cm => cm.type == 'EMAIL' && cm.order == 1);
+            if (mainPolicyHolderEmail == null) {
+                isValid = false;
+                $('#accountHolderSetupAlertContent').html("Main policy holder email is require for direct debit payments");
+                $('#accountHolderSetupAlert').modal('show');
+            }
+        }
+    }
+    return isValid;
+}
+
+function validateQuoteApply() {
+    if ($('#apply').is(':visible')){
+        $("#apply-error").show();
+        return false;
+    }
+    $("#apply-error").hide();
+    return true;
+}
+
+function paymentAuthorityAlert(){
+    if($('input[name="paymentAuthoritySelection1"]:checked').val()=="N" && $('input[name="paymentAuthoritySelection2"]:checked').val()=="Y"){
+        $('#accountHolderSetupAlertContent').html("Unfortunately the customer needs to be the account holder to set up a direct debit");
+        $('#accountHolderSetupAlert').modal('show');
+    }
+    if($('input[name="paymentAuthoritySelection1"]:checked').val()=="N" && $('input[name="paymentAuthoritySelection2"]:checked').val()=="N"){
+        $('#accountHolderSetupAlertContent').html("Unfortunately the customer needs to be the account holder and authorised to set up a direct debit");
+        $('#accountHolderSetupAlert').modal('show');
+    }
+    if($('input[name="paymentAuthoritySelection1"]:checked').val()=="Y" && $('input[name="paymentAuthoritySelection2"]:checked').val()=="N"){
+        $('#accountHolderSetupAlertContent').html("Unfortunately the customer needs to be authorised to set up a direct debit");
+        $('#accountHolderSetupAlert').modal('show');
+    }
+
+}
+
+$("#confirm-mta-changes-btn").click(function () {
+    $("#confirm-changes").prop("checked", true);
+    $("#amendmentsInfo").modal("hide");
+});
+
+$('#autoRenewal').change(function() {
+  $('#ar-quote-update-btn').attr('disabled', false);
+});
+
+$("input[name='pay']").change(function(){
+    $('#ar-quote-update-btn').attr('disabled', false);
+});
+
+/* $("#cardType").change(function () {
+    $('#ar-quote-update-btn').attr('disabled', false);
+ });*/
+
+
+function saveQuoteAttributionAgent() {
+    $("#loaderModal").modal("show");
+    var form = $('#petPaymentForm');
+    var selectedAgent = $("#agentName-dpd option:selected");
+    var quoteAttributionAgentId = selectedAgent.attr("data-agentid");
+    var quoteAttributionAgentName = selectedAgent.val();
+    $.ajax({
+        type: form.attr('method'),
+        url: form.attr('action'),
+        data: {
+            personReference: $('#personReference').val(),
+            quoteReference: $('#quoteReference').val(),
+            quoteAttributionAgentId: quoteAttributionAgentId,
+            quoteAttributionAgentName: quoteAttributionAgentName,
+            productType: $('#productType').val(),
+            domainType: $('#domainType').val(),
+            action: 'save-quote-attribution'
+        },
+        success: function (response) {
+            $("form[id='petPaymentForm'] #agentId").val(quoteAttributionAgentId);
+            $("form[id='petPaymentForm'] #agentName").val(quoteAttributionAgentName);
+            $("#loaderModal").modal("hide");
+        },
+        error: function (response) {
+            $("#loaderModal").modal("hide");
+        }
+    });
+}
+
+function getRegularPaymentDays() {
+    var form = $('#petPaymentForm');
+    var paymentMethod = (isMta?mainTreeObj.quote.info.paymentMethod:$("input[name='payMethod']:checked").val() != null? $("input[name='payMethod']:checked").val() : "CARD");
+    var firstPaymentDate = $("[name='firstPaymentDateSelect']:checked").val();
+    $.ajax({
+        type: 'get',
+        url: form.attr('action'),
+        data: {
+            paymentMethod: paymentMethod,
+            firstPaymentDate:firstPaymentDate,
+            productChannel: "HUB",
+            productType: $('#productType').val(),
+            domainType: $('#domainType').val(),
+            action: 'regular_pay_date_lookup'
+        },
+        success: function (response) {
+            if(response.status != "fail"){
+                $("#regularPaymentDaySelect").empty();
+                let elementEnable = 0;
+                let firstEnableOne = 0;
+                for (let i = 1; i < 32; i++) {
+                    let text = "";
+                    if (i >= 11 && i <= 13) {
+                        text= i + "th";
+                    }else if(i % 10 == 1){
+                        text= i + "st";
+                    }else if(i % 10 == 2){
+                         text= i + "nd";
+                    }else if(i % 10 == 3){
+                       text= i + "rd";
+                    }else{
+                       text= i + "th";
+                    }
+                    let isValidRegularDate = response.data.some(element => {
+                       if (element.day === i && element.enable) {
+                         if(firstEnableOne==0){
+                            elementEnable = i;
+                            firstEnableOne = firstEnableOne + 1;
+                         }
+                         return true;
+                       }
+                       return false;
+                    });
+                    $('#regularPaymentDaySelect').append($('<option>', {
+                         value: i,
+                         text : text
+                    }));
+                    if(!isValidRegularDate){
+                        $("#regularPaymentDaySelect option[value='"+i+"']").attr("disabled","disabled");
+                    }
+                    if(mainTreeObj.quote.info.regularPaymentDay != null || typeof mainTreeObj.quote.info.regularPaymentDay != 'undefined'){
+                        $("#regularPaymentDaySelect").val(mainTreeObj.quote.info.regularPaymentDay);
+                    }
+                }
+                $("#regularPaymentDaySelect").val(elementEnable);
+                if(mainTreeObj.quote.info.regularPaymentDay != null || typeof mainTreeObj.quote.info.regularPaymentDay != 'undefined'){
+                    $("#regularPaymentDaySelect").val(mainTreeObj.quote.info.regularPaymentDay);
+                }
+            }
+        },
+        error: function (response) {
+            return null;
+        }
+    });
+}
+
+function validateRegularPaymentDay() {
+    if (((isMta && showPaymentDateChangePopUp) || (!isMta && $("input[name='payType']:checked").val() == 'MONTHLY')) && $("[name='regularPaymentDaySelect']").val() == null) {
+        var form = $('#petPaymentForm');
+        var paymentMethod = isMta ? mainTreeObj.quote.info.paymentMethod : $("input[name='payMethod']:checked").val() != null ? $("input[name='payMethod']:checked").val() : "CARD";
+        var firstPaymentDate = $("[name='firstPaymentDateSelect']:checked").val() != null ? $("[name='firstPaymentDateSelect']:checked").val() : getToday();
+        $.ajax({
+            type: 'get',
+            url: form.attr('action'),
+            data: {
+                paymentMethod: paymentMethod,
+                firstPaymentDate:firstPaymentDate,
+                productChannel: "HUB",
+                productType: $('#productType').val(),
+                domainType: $('#domainType').val(),
+                action: 'regular_pay_date_lookup'
+            },
+            success: function (response) {
+                if(response.status === "error"){
+                    $('#accountHolderSetupAlertContent').html(response.message);
+                    $('#accountHolderSetupAlert').modal('show');
+                } else {
+                    $('#accountHolderSetupAlertContent').html("Invalid payment date");
+                    $('#accountHolderSetupAlert').modal('show');
+                }
+            },
+            error: function (response) {
+                $('#accountHolderSetupAlertContent').html("Oops, Something went wrong. Please try again. If the problem persists, please contact the system support team with the relevant quote ID...");
+                $('#accountHolderSetupAlert').modal('show');
+            }
+        });
+        return false;
+    }
+    return true;
+}
+
+function setPaymentDateDropDownValue(){
+    $("#payment-date-option-1").val(formattedTodayDate);
+    $("#payment-date-option-2").val(formattedPolicyStartDate);
+    $("#payment-date-option-1").prop("checked", true);
+    $('#regularPaymentDaySelect').find('option').remove();
+    if(disablePolicyStartDateAsFirstPaymentDate){
+        $('#payment-date-option-2').attr('disabled', true);
+    }
+}
+
+function getToday(){
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    let mm = today.getMonth() + 1;
+    let dd = today.getDate();
+    if (dd < 10) dd = '0' + dd;
+    if (mm < 10) mm = '0' + mm;
+    const formattedToday = dd + '/' + mm + '/' + yyyy;
+    return formattedToday;
+}
+
+function getEarliestDDPaymentDate(){
+    var form = $('#petPaymentForm');
+    var quoteRef = $('#policyViewQuoteRef').val();
+    var personReference = $('#personReference').val();
+    var mainTreeVersion = $('#mainTreeVersion').val();
+    var domainType = $('#domainType').val();
+    var productType = $('#productType').val();
+    $.ajax({
+        type: "POST",
+        url: form.attr('action'),
+        async: false,
+        data: {
+            'action': 'get-dd-earliest-payment-date',
+            'quoteReference': quoteRef,
+            'mainTreeVersion': mainTreeVersion,
+            'personReference': personReference,
+            'domainType': domainType,
+            'productType': productType,
+        },
+        success: function (response) {
+            if(response.statusCode == 200){
+                let model = {};
+                model.paymentDateAdjusted = response.result.paymentDateAdjusted;
+                model.earliestCollectionDate = response.result.earliestCollectionDate != null ? response.result.earliestCollectionDate : null;
+                model.firstPaymentDate = response.result.firstPaymentDate != null ? response.result.firstPaymentDate : null;
+                return model;
+            } else {
+                return {};
+            }
+        },
+        error: function (jqXHR, textStatus) {
+            $("#loaderModal").modal("hide");
+            return {};
+        }
+    });
+}
+
+function DDMTAPolicyProceed(){
+    if(validatePayType() && validatePayMethod() && validateQuoteApply() && $('#petPaymentForm').valid()){
+        $("#paymentDateAdjustedModal").modal("hide");
+        initiatePayment();
+     }
+}
+

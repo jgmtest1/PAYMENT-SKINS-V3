@@ -1,0 +1,39 @@
+ctalk = function () {
+    // this is referring to localhost of the client machine where the
+    // ctalk iceAgent tool-bar is hosted
+    var ctalkBaseURL = "http://localhost:8050";
+
+    function startCtalkCallRecording() {
+
+        var ctalk = document.createElement("img");
+        ctalk.src = ctalkBaseURL + "/iceAgent?command=260&mode=0";
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", ctalkBaseURL + "/iceAgent?command=260&mode=0", true);
+        xhr.send();
+    };
+
+    function stopCtalkCallRecording() {
+
+        var ctalk = document.createElement("img");
+        ctalk.src = ctalkBaseURL + "/iceAgent?command=260&mode=1";
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", ctalkBaseURL + "/iceAgent?command=260&mode=1", true);
+        xhr.send();
+
+    };
+
+    function updateQuoteDataInCtalk(quoteId) {
+        var url = ctalkBaseURL + "/iceAgent?command=600&userData=";
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", url + quoteId, true);
+        xhr.send();
+    };
+
+    return {
+        startCtalkCallRecording: startCtalkCallRecording,
+        stopCtalkCallRecording: stopCtalkCallRecording,
+        updateQuoteDataInCtalk: updateQuoteDataInCtalk
+    }
+}();

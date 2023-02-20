@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<!-- saved from url=(0206)https://exalthubuat.interserv.co.uk/hub/payment?personReference=kC947BFXvQEbPUahSht76A%3D%3D&quoteReference=u37RSI%2BdD0PfD0zVAcfUOg%3D%3D&nextBtn=true&productType=PET&domainType=PETSURE&flow=mo-create-flow -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta content="utf-8" http-equiv="encoding">
+    <title>New Quote</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="description" content="content">
+    <link rel="shortcut icon" href="https://exalthubuat.interserv.co.uk/hub/_/asset/com.intervest.hub:000001864ec70030/hub/pet-petsure/images/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="./New Quote_files/style.min.css" media="screen">
+    <script type="text/javascript" src="./New Quote_files/jquery.js.download"></script>
+    <script type="text/javascript" src="./New Quote_files/jquery-ui.min.js.download"></script>
+    <script type="text/javascript" src="./New Quote_files/jquery.validate.min.js.download"></script>
+    <script type="text/javascript" src="./New Quote_files/bootstrap.bundle.min.js.download"></script>
+    <script type="text/javascript" src="./New Quote_files/hierarchy-select.min.js.download"></script>
+    <script type="text/javascript" src="./New Quote_files/custom.js.download"></script>
+    <script type="text/javascript" src="./New Quote_files/ajax-interceptor.js.download"></script>
+
+    
+</head>
+<body class="" style="">
+<header>
+    <div>
+    <div class="container-fluid no-padding">
+        <div class="row">
+            <div class="col d-md-flex align-items-center">
+                <div class="sidebar-wd">
+                    <button class="navbar-toggler d-md-none" type="button" data-toggle="collapse" data-target="#navbarPanel" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon mr-2"></span>
+                    </button>
+                    <a id="header_home" class="head-logo" href="https://exalthubuat.interserv.co.uk/hub/payment?personReference=kC947BFXvQEbPUahSht76A%3D%3D&amp;quoteReference=u37RSI%2BdD0PfD0zVAcfUOg%3D%3D&amp;nextBtn=true&amp;productType=PET&amp;domainType=PETSURE&amp;flow=mo-create-flow#">
+                        <img src="./New Quote_files/logo.png" class="logo" alt="Hub">
+                    </a>
+                </div>
+                <div class="date-time-line" id="date-time-line">Monday 20th February 2023 8:18:02 PM</div>
+            </div>
+            <div class="col text-right">
+                <form action="https://exalthubuat.interserv.co.uk/hub/payment" method="post" id="logoutForm">
+                    <span class="login-field mr-3">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <span>Welcome: <span id="agentName">Test PETSURE test</span></span>
+                    </span>
+                    <button class="btn btn-outline-primary login-field icon-link">
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                        <span class="nav-link-txt">Log out</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</header>
+
+<div class="container-fluid px-md-0">
+    <div>
+    <div class="modal fade" id="commonModal" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" id="commonModalContent">
+                
+                <div class="modal-header">
+                    <h5 class="modal-title" id="commonModalTitle">Notification</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body" id="commonModalBodyContent"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div>
+    <div id="loaderModal" class="modal" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="alert alert-primary d-flex align-items-center" role="alert">
+                        <div class="spinner-grow text-primary" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <span id="loaderModalMessage" class="ml-2">Your request is processing...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div>
+    <div class="modal fade general" id="commonMsgViewer" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body" id="bodyContent">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="d-flex position-relative">
+        <div class="primary-navbar d-md-block collapse" id="navbarPanel">
+    <script>
+        /*<![CDATA[*/
+        var myPetsureSearch = "/hub/mypetsure-search";
+        var genericHubSearch = "/hub/search";
+        var myStaysureSearch = "/hub/mystaysure-search";
+      /*]]>*/
+    </script>
+    <div class="primary-navbar d-md-block collapse" id="navbarPanel">
+        <div class="accordion sidebar-nav" id="accordionExample">
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h2 class="nav-title mb-0">
+                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="genericHub">
+                            <div>
+                                <i class="fas fa-h-square"></i>
+                                <span class="title-nav">Generic Hub</span>
+                            </div>
+                            <i class="fal fa-angle-up" aria-hidden="true"></i>
+                        </button>
+                    </h2>
+                </div>
+
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne">
+                    <ul class="card-body nav-links">
+                        <li>
+                            <a href="https://exalthubuat.interserv.co.uk/hub/search">
+                                <i class="far fa-search"></i>
+                                <span>Search</span>
+                            </a>
+                        </li>
+                        
+                        
+                        
+                        <li class="active">
+                            <a href="https://exalthubuat.interserv.co.uk/hub/new-quote?flow=mo-create-flow&amp;productType=PET&amp;domainType=PETSURE">
+                                <i class="far fa-window-maximize"></i>
+                                <span>New Quote</span>
+                            </a>
+                        </li>
+                       
+                       <div id="collapseMoQuote" class="collapse" aria-labelledby="headingMoQuote">
+                           <ul class="card-body nav-links sub-level">
+                               
+                               
+                           </ul>
+                       </div>
+                        <li>
+                            <a href="https://exalthubuat.interserv.co.uk/hub/role/search?productType=PET&amp;domainType=PETSURE">
+                                <i class="far fa-user-secret"></i>
+                                <span>User Role</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://exalthubuat.interserv.co.uk/hub/admin/search?productType=PET&amp;domainType=PETSURE">
+                                <i class="far fa-user-secret"></i>
+                                <span>User Admin</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://exalthubuat.interserv.co.uk/hub/master-data?productType=PET&amp;domainType=PETSURE">
+                                <i class="far fa-database"></i>
+                                <span>Master Data</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://exalthubuat.interserv.co.uk/hub/reports?productType=PET&amp;domainType=PETSURE">
+                                <i class="fal fa-file-alt"></i>
+                                <span>Report</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://exalthubuat.interserv.co.uk/hub/recent-quotes?productType=PET&amp;domainType=PETSURE">
+                                <i class="far fa-window-maximize"></i>
+                                <span>Recent Quotes</span>
+                            </a>
+                        </li>
+                        
+                        <div id="collapseRecentQuote" class="collapse" aria-labelledby="headingRecentQuote">
+                            <ul class="card-body nav-links sub-level">
+                                
+                                
+                            </ul>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+
+           <div>
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <h2 class="nav-title mb-0">
+                        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" id="myPetsureHub" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <div>
+                                <i class="fa fa-home" aria-hidden="true"></i>
+                                <span class="title-nav">Support</span>
+                            </div>
+                            <i class="fal fa-angle-down" aria-hidden="true"></i>
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo">
+                    <ul class="card-body nav-links" id="ulmypetsurehub">
+                        <li>
+                            <a href="https://exalthubuat.interserv.co.uk/hub/mypetsure-search"><i class="far fa-search"></i>
+                                <span>MyPetsure Search</span></a></li>
+                        <li>
+                            <a href="https://exalthubuat.interserv.co.uk/hub/mp-viewer">
+                                <i class="fal fa-file-alt"></i>
+                                <span>Exception Viewer</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://exalthubuat.interserv.co.uk/hub/mp-resolver">
+                                <i class="fal fa-file-alt"></i>
+                                <span>Exception Resolver</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+         </div>
+         
+       </div>
+    </div>
+</div>
+
+        <div class="primary-navbar-content" data-portal-region="main">
+<!--            <div class="rule-top-bar-wrapper">-->
+<!--                <div class="rule-top-bar mta">-->
+<!--                    <p>MTA</p>-->
+<!--                </div>-->
+<!--            </div>-->
+            <!--<div class="rule-top-bar-wrapper">
+                <div class="rule-top-bar arq">
+                    <p>Auto Renewal Quote</p>
+                </div>
+            </div>-->
+            
+                
+            
+            
+                <div data-portal-component-type="part" id="wapp-menu">
+    <script>
+        /*<![CDATA[*/
+        var breadcrumbProductType = "PET";
+        var breadcrumbDomainType = "PETSURE";
+        /*]]>*/
+    </script>
+    
+</div>
+<script>
+    $(document).ready(function () {
+        $(".breadcrumb-nav-item").hide();
+        $("." + breadcrumbProductType.toLowerCase() + "-" + breadcrumbDomainType.toLowerCase()).show();
+    });
+</script>
+            
+            
+                <div data-portal-component-type="part" id="pet-menu">
+    <ul class="nav nav-tabs primary-tab" id="navTab" role="tablist">
+        <li class="nav-item" id="mo-tab-1">
+            <a class="nav-link" id="petDetails-tab" href="https://exalthubuat.interserv.co.uk/hub/new-quote?domainType=PETSURE&amp;lastLoadedTab=6&amp;quoteReference=u37RSI%2BdD0PfD0zVAcfUOg%3D%3D&amp;personReference=kC947BFXvQEbPUahSht76A%3D%3D&amp;nextBtn=false&amp;productType=PET&amp;flow=mo-create-flow" aria-controls="petDetails" aria-selected="false">Pet Details</a>
+        </li>
+        <li class="nav-item" id="mo-tab-2">
+            <a class="nav-link" id="mainPolicyHolderDetails-tab" href="https://exalthubuat.interserv.co.uk/hub/main-policy-holder-details?domainType=PETSURE&amp;lastLoadedTab=6&amp;quoteReference=u37RSI%2BdD0PfD0zVAcfUOg%3D%3D&amp;personReference=kC947BFXvQEbPUahSht76A%3D%3D&amp;nextBtn=false&amp;productType=PET&amp;flow=mo-create-flow" aria-controls="mainPolicyHolderDetails" aria-selected="false">Policy Holder Details</a>
+        </li>
+        <li class="nav-item" id="mo-tab-3">
+            <a class="nav-link" id="policyDetails-tab" href="https://exalthubuat.interserv.co.uk/hub/policy-details?domainType=PETSURE&amp;lastLoadedTab=6&amp;quoteReference=u37RSI%2BdD0PfD0zVAcfUOg%3D%3D&amp;personReference=kC947BFXvQEbPUahSht76A%3D%3D&amp;nextBtn=false&amp;productType=PET&amp;flow=mo-create-flow" aria-controls="policyDetails" aria-selected="false">Policy Details</a>
+        </li>
+        <li class="nav-item" id="mo-tab-4">
+            <a class="nav-link" id="medical-tab" href="https://exalthubuat.interserv.co.uk/hub/medical?domainType=PETSURE&amp;lastLoadedTab=6&amp;quoteReference=u37RSI%2BdD0PfD0zVAcfUOg%3D%3D&amp;personReference=kC947BFXvQEbPUahSht76A%3D%3D&amp;nextBtn=false&amp;productType=PET&amp;flow=mo-create-flow" aria-controls="medical" aria-selected="false">Medical</a>
+        </li>
+        <li class="nav-item" id="mo-tab-5">
+            <a class="nav-link" id="pricePresentation-tab" href="https://exalthubuat.interserv.co.uk/hub/price-presentation?domainType=PETSURE&amp;lastLoadedTab=6&amp;quoteReference=u37RSI%2BdD0PfD0zVAcfUOg%3D%3D&amp;personReference=kC947BFXvQEbPUahSht76A%3D%3D&amp;nextBtn=false&amp;productType=PET&amp;flow=mo-create-flow" aria-controls="pricePresentation" aria-selected="false">Price Presentation</a>
+        </li>
+        <li class="nav-item" id="mo-tab-6">
+            <a class="nav-link active" id="payment-tab" href="https://exalthubuat.interserv.co.uk/hub/payment?domainType=PETSURE&amp;lastLoadedTab=6&amp;quoteReference=u37RSI%2BdD0PfD0zVAcfUOg%3D%3D&amp;personReference=kC947BFXvQEbPUahSht76A%3D%3D&amp;nextBtn=false&amp;productType=PET&amp;flow=mo-create-flow" aria-controls="payment" aria-selected="false">Payment</a>
+        </li>
+    </ul>
+    <script type="text/javascript">
+        /*<![CDATA[*/
+        var lastActiveTab = 6;
+        /*]]>*/
+    </script>
+    <script type="text/javascript" src="./New Quote_files/common.js.download"></script>
+</div>
+            
+            
+                <div data-portal-component-type="layout" class="oq-dashboard d-flex">
+    <script>
+        /*<![CDATA[*/
+        var assumptions = "<pre>\nAssumption content will be added.<\/pre>";
+        var benefitSummary = "<pre>\nBenefit Summary content will be added.<\/pre>";
+        var TandC = "<pre>\nT 's &amp;&nbsp; C's content will be added.<\/pre>";
+        var outboundScript = "<pre>\nOutbound script content will be added.<\/pre>";
+        var thirtyDayScript = "<pre>\n30 day script content will be added.<\/pre>";
+        var twoYearAndNegativeTests = "<pre>\n2 year and negative tests content will be added.<\/pre>";
+        var petPomoCodeUrl = "/hub/payment/_/component/main/3";
+        /*]]>*/
+    </script>
+    <div class="oq-summary-main-wrapper">
+        <aside class="oq-summary-sidebar">
+            <div id="MOSidebar" class="collapse show width">
+                <div class="quote-summary">
+                    <div class="side-panel">
+                        <form class="form-horizontal" id="pet-promo-code-form" method="POST">
+                            <div class="side-panel-wrapper">
+                                <div class="form-group">
+                                    <input type="hidden" id="" name="form_action" value="pet_promo_code">
+                                    <input type="hidden" name="personReference" id="personReference" value="kC947BFXvQEbPUahSht76A==">
+                                    <input type="hidden" name="quoteReference" id="quoteReference" value="u37RSI+dD0PfD0zVAcfUOg==">
+                                    <input type="hidden" name="mainTreeVersion" id="mainTreeVersion" value="6">
+                                    <input type="hidden" name="status" id="status" value="ACTIVE">
+                                    <label class="mb-1">Discount Code</label>
+                                    <div class="dcode-fld mb-1">
+                                        <fieldset>
+                                            <input type="text" class="form-control border-primary" id="promo_code" name="promo_code" value="" onkeyup="petPromoCode.hideMsg()" disabled="disabled">
+                                            <button type="button" class="btn btn-secondary" id="promoCodeApplyButton" onclick="petPromoCode.applyPromoCode()" disabled="disabled">Apply</button>
+                                        </fieldset>
+                                    </div>
+                                    <div class="valid-msg d-none"><i class="fas fa-check-circle"></i> Valid code</div>
+                                    <div class="invalid-msg d-none"><i class="fas fa-times-circle"></i> Invalid code
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <section class="section-panel">
+                            <h3 class="panel-header">Documents</h3>
+                            <div class="panel-wrapper">
+                                <ul class="default-list">
+                                    <li><a target="_blank" href="https://exalthubuat.interserv.co.uk/hub/_/asset/com.intervest.hub:000001864ec70030/hub/pet-petsure/js/private/mo-flow/documents/assumptions.pdf" class="btn-link">Assumptions</a></li>
+                                    
+                                    <li><a target="_blank" href="https://exalthubuat.interserv.co.uk/hub/_/asset/com.intervest.hub:000001864ec70030/hub/pet-petsure/js/private/mo-flow/documents/ipid_v4.pdf" class="btn-link">IPID's</a></li>
+                                    <li><a target="_blank" href="https://exalt-documentuat.petsure.com/document/loadStatic/5ee90b410d26537928dcaede7c7d6e18043bb059b5d8c7e0956f8a9dae928cc1/PolicyWording.pdf" class="btn-link">Policy Wording</a></li>
+                                    
+                                    <li><a target="_blank" href="https://exalthubuat.interserv.co.uk/hub/_/asset/com.intervest.hub:000001864ec70030/hub/pet-petsure/js/private/mo-flow/documents/termsAndConditions.pdf" class="btn-link">T's &amp; C's</a></li>
+                                    <li><a target="_blank" href="https://exalthubuat.interserv.co.uk/hub/_/asset/com.intervest.hub:000001864ec70030/hub/pet-petsure/js/private/mo-flow/documents/outboundScript.pdf" class="btn-link">Outbound script</a></li>
+                                    <li><a target="_blank" href="https://exalthubuat.interserv.co.uk/hub/_/asset/com.intervest.hub:000001864ec70030/hub/pet-petsure/js/private/mo-flow/documents/30dayQuoteScripting.pdf" class="btn-link">30 day script</a></li>
+                                    <li><a target="_blank" href="https://exalthubuat.interserv.co.uk/hub/_/asset/com.intervest.hub:000001864ec70030/hub/pet-petsure/js/private/mo-flow/documents/negativeTestResults&amp;2YearCriteria.pdf" class="btn-link">2 year and negative tests</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div data-portal-region="right" class="page-content">
+        
+            <div data-portal-component-type="part">
+    <div class="sticky-reminder-section">
+        <span class="refId"> Quote ref: 882645 </span>
+        <span class="days"> Inside 30 days </span>
+    </div>
+    
+    <div>
+    <div id="loaderModal" class="modal" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="alert alert-primary d-flex align-items-center" role="alert">
+                        <div class="spinner-grow text-primary" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <span id="loaderModalMessage" class="ml-2">Your request is processing...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div>
+    <div class="modal fade general amendment-modal" id="amendmentsInfo" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="amendmentsInfoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Amendment Summary</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-warning mb-3" role="alert">
+                        Before I put this through,I just want to confirm the changes you are making today are:.
+                    </div>
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="alert alert-warning mb-3" role="alert">
+                        <span>Are there any other changes that need to be made today?</span>
+                    </div>
+
+                    <div class="alert alert-warning mb-3" role="alert">
+                        
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No / Cancel</button>
+                    <button type="button" class="btn btn-primary" id="confirm-mta-changes-btn">Yes / Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--    <div th:include="com.intervest.hub:/site/parts/common/modals.html :: petChangePaymentDateModal"></div>-->
+    <form id="petPaymentForm" action="https://exalthubuat.interserv.co.uk/hub/payment/_/component/main/3/right/0" method="post" novalidate="novalidate">
+        <input type="hidden" id="personReference" name="personReference" value="kC947BFXvQEbPUahSht76A==">
+        <input type="hidden" id="quoteReference" name="quoteReference" value="u37RSI+dD0PfD0zVAcfUOg==">
+        <input type="hidden" id="domainType" name="domainType" value="PETSURE">
+        <input type="hidden" id="productType" name="productType" value="PET">
+        <input type="hidden" id="isMta" name="isMta" value="false">
+        <div id="paymentPageContent" class="page-content"><div data-portal-component-type="part">
+    <iframe src="./New Quote_files/paypage.html" width="100%" height="750px" id="payment-iframe" frameborder="0"></iframe>
+</div></div>
+    </form>
+</div>
+<!--SUPERVISOR AUTHENTICATION-->
+<div class="modal fade general top-most-modal" id="supervisorAuthentication" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Supervisor Authentication</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info mb-3" role="alert">
+                    Please authorise this operation with a supervisor account
+                </div>
+                <div class="form-group row">
+                    <div class="offset-sm-3 col-sm-9">
+                        <div class="popover error-alignment error bs-popover-bottom position-relative mt-0 mw-100" id="fail-authentication" style="display:none;">
+                            <div class="popover-inner">
+                                <div class="popover-body" id="authenticationFailedError"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">User Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="username" name="username" value="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Password</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" id="password" name="password" value="">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Back</button>
+                <button type="button" class="btn btn-primary" onclick="proceed()">Proceed</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--modal PAYMENT AUTHORITY- 'NO' & 'YES' ALERT-->
+<div class="modal fade general" id="accountHolderSetupAlert" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="accountHolderSetupAlertLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Attention</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger" id="accountHolderSetupAlertContent"></div>
+            </div>
+            <div class="text-center mb-5">
+                <button type="button" class="btn btn-secondary custom-width" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--modal PAYMENT AUTHORITY- 'NO' & 'YES' ALERT END-->
+
+<!--Modal DIRECT DEBIT GUARANTEE START-->
+<div class="modal fade general" id="directDebitGuarantee" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="directDebitGuaranteeLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="text-center pt-4">
+                <h5 class="header-title pt-3 mb-0">Direct debit Guarantee</h5>
+            </div>
+            <div class="modal-body" id="directDebitGuaranteeBody">
+            </div>
+            <div class="text-center mb-5">
+                <button type="button" class="btn btn-secondary custom-width" data-dismiss="modal">OK, GOT IT</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal DIRECT DEBIT GUARANTEE END-->
+<!-- PAYMENT DATE ADJUSTED MODEL START -->
+<div class="modal fade general top-most-modal" id="paymentDateAdjustedModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Notification</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label class="col-form-label mb-1">
+                    <p>The cost difference of the above changes will be £
+                        
+                         
+                    </p>
+                        Your next payment is due on <span id="previousPaymentDate"></span>. As this hasn't processed yet,we'll need to move this payment to <span id="newPaymentDate"></span> to complete your cover change. Are you happy to go ahead?
+                </label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">NO</button>
+                <button type="button" class="btn btn-primary" onclick="validateInitiatePayment(&#39;initiate-payment&#39;)">YES</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--  PAYMENT DATE ADJUSTED MODEL END -->
+<script type="text/javascript" src="./New Quote_files/ctalkCallRecording.js.download"></script>
+<script type="text/javascript">
+    ctalk.startCtalkCallRecording();
+</script>
+<script type="text/javascript">
+    /*<![CDATA[*/
+    var quoteId = "882645";
+    var showPaymentDateChangePopUp = false;
+    var formattedTodayDate = "20/02/2023";
+    var formattedPolicyStartDate = "21/02/2023";
+    var formattedUIPolicyStartDate = "21st February 2023";
+    var disablePolicyStartDateAsFirstPaymentDate = false;
+    var isPolicyStartToday = false;
+    var directDebitPaymentAuthorityQ1 = "N";
+    var directDebitPaymentAuthorityQ2 = "N";
+    var directDebitPaymentAuthorityQ3 = "N";
+    var isMta = false;
+    var ddActive = "true";
+    var mainTreeObj = {"quote":{"requestedFlow":"CREATE_FLOW","quotedMethod":"HUB","status":"ACTIVE","startDate":"21/02/2023","endDate":"20/02/2024","agentName":"Test PETSURE test","businessFlow":"HUB","properties":[{"propertyReference":"CSxD6abFU1uE2jfwOaP69g==","attributes":{"isMicroChipped":"Y","amount":"20","gender":"MALE","specialTermsAndConditions":[],"extras":[{"name":"DENTAL_ILLNESS_COVER","value":"N"},{"name":"MISSING_PET_COVER","value":"N"},{"name":"TRAVEL_AND_HOLIDAY_COVER","value":"N"},{"name":"FAREWELL_COVER","value":"N"}],"breed":["Persian"],"assumptions":"Y","petCoverStartDate":"21/02/2023","firstName":"dfd","hasAwaitingDiagnosis":"N","hasMedicalCondition":"N","species":"CAT","dob":"03/01/2023","priceDob":"03/01/2023","priceBreed":["Persian"],"isSpayedOrNeutered":"Y","confirmCovers":"N","breedType":"PEDIGREE","age":"1","covers":[{"name":"VET_FEE","value":"1000"},{"name":"EXCESS","value":"0"},{"name":"BILL_SHARE","value":"0"}],"healthStatus":"NONE"},"type":"PET"}],"info":{"nextPaymentDate":"","initialQuoteBusinessFlow":"HUB","ip":"","categoryDisplayName":"Lifetime","finalPrice":"149.09","partyType":"INDIVIDUAL","defaultStartDate":"N","priceSeen":1,"hasAutoRenewalQuote":false,"noOfPetsInsured":"1","pendingInstallmentCount":"0","enableManualCoolingOffSelection":false},"covers":[],"extras":[],"adjustments":[],"postage":{"type":"EMAIL","value":0,"requestType":"AUTO"},"quoteReference":"u37RSI+dD0PfD0zVAcfUOg==","quoteId":882645},"myAccountRedirectData":{"hasMyAccount":"N","redirectUrl":"https://exaltmyaccountuat.petsure.com/create-an-account?emailEnc=C%2F8Xvf%2Fa%2BZ%2Beah0OsfAHRQ%3D%3D&exceptionStatus=success&mapping=fail"},"mainPolicyHolder":{"title":"Mr","firstName":"xc","lastName":"xcxc","dob":"04/02/1987","commMethods":[{"isVerified":"Y","type":"PHONE","value":"004412345678","order":1},{"isVerified":"Y","type":"EMAIL","value":"r@r.lk","order":1}],"address":{"address1":"dffdf","city":"xcxcxcc","postcode":"nn44rr","country":"GB","countryCode":"GB"},"consents":[{"consent":"TELEPHONE","value":"N"},{"consent":"EMAIL","value":"N"},{"consent":"POST","value":"N"},{"consent":"SMS","value":"N"}],"versions":[{"versionName":"MAIN_TREE_VERSION","versionNumber":6},{"versionName":"STATIC_TREE_VERSION","versionNumber":0}],"contactReference":"2ZZG2cosIV1XX8OTTaOxCQ==","personReference":"kC947BFXvQEbPUahSht76A=="}};
+    var directDebitGuaranteeScript = "<p><strong>\u2022 The Guarantee is offered by all banks and building societies that accept instructions to pay Direct Debits<br />\n<br />\n\u2022 If there are any changes to the amount, date or frequency of your Direct Debit the organisation will notify you (normally 10 working days) in advance of your account being debited or as otherwise agreed. If you request the organisation to collect a payment, confirmation of the amount and date will be given to you at the time of the request<br />\n<br />\n\u2022 If an error is made in the payment of your Direct Debit, by the organisation or your bank or building society, you are entitled to a full and immediate refund of the amount paid from your bank or building society<br />\n&nbsp;&nbsp;&nbsp; o If you receive a refund you are not entitled to, you must pay it back when the organisation asks you to<br />\n<br />\n\u2022 You can cancel a Direct Debit at any time by simply contacting your bank or building society. Written confirmation may be required. Please also notify the organisation.<\/strong><\/p>";
+    var earliestCollectionDetails = null;
+    var monthlyPriceDifference = 0.0;
+    if (quoteId != null) {
+        ctalk.updateQuoteDataInCtalk(quoteId);
+    }
+    /*]]>*/
+</script>
+
+<script type="text/javascript" src="./New Quote_files/payment.js.download"></script>
+<script type="text/javascript" src="./New Quote_files/validation.js.download"></script>
+
+
+        
+    </div>
+</div>
+<script type="text/javascript" src="./New Quote_files/common.js.download"></script>
+<script type="text/javascript" src="./New Quote_files/hub.js.download"></script>
+<script type="text/javascript" src="./New Quote_files/ajax-interceptor.js.download"></script>
+            
+        </div>
+
+    </div>
+</div>
+
+
+</body></html>

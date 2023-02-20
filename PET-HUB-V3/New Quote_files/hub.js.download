@@ -1,0 +1,1182 @@
+$(document).ready(function () {
+
+    $('#paymentPagePopupClose').on('click', function (e) {
+        $("#payment-page-popup").modal('hide');
+    });
+
+    $('#userPaymentDaysModalOkBtn').on('click', function (e) {
+        if ($("#chkUserPaymentDaysAgreed").is(':checked')) {
+            $('#userPaymentDaysChangeConfirmOk').modal('show');
+        } else {
+            e.preventDefault();
+            $('#userPaymentDaysChangeConfirm').modal('show');
+        }
+    });
+
+    $('#userPaymentDaysChangeConfirmBtnOk').on('click', function (e) {
+        $('#userPaymentDaysChangeConfirmOk').modal('hide');
+        $("#loaderModal").modal('show');
+        var frm = $('#userPaymentDaysChangeForm');
+        $.ajax({
+            type: frm.attr('method'),
+            url: frm.attr('action'),
+            data: frm.serialize(),
+            success: function (response) {
+                $("#userPaymentDaysDiv").html(response);
+                $("#loaderModal").modal('hide');
+                $("#successModal").modal('show');
+            }, error: function (response) {
+                $("#userPaymentDaysDiv").html(response);
+                $("#loaderModal").modal('hide');
+                alert("error");
+            }
+        });
+        frm.event.preventDefault();
+
+    });
+    setInterval('header.updateClock()', 1000);
+
+    $('#policyListTab').on("click", "li", function (event) {
+        var activeTab = $(this).find('a').attr('href');
+        sessionStorage.setItem("activeTab", activeTab);
+    });
+
+    var tab = sessionStorage.getItem("activeTab");
+    if (tab == "#policyHistory") {
+        $('.nav-tabs a[href="#policyHistory"]').tab('show');
+    } else {
+        $('.nav-tabs a[href="#livePolicy"]').tab('show');
+    }
+
+    $("#bacs_account_name").keypress(function (e) {
+        var keyCode = e.keyCode || e.which;
+        //Regex for Valid Characters i.e. Alphabets.
+        var regex = /^[A-Za-z- ]+$/;
+        //Validate TextBox value against the Regex.
+        var isValid = regex.test(String.fromCharCode(keyCode));
+        if ($(this).val().length > 45) {
+            event.preventDefault();
+        }
+        return isValid;
+    });
+
+    $("#bacs_bank_name").keypress(function (e) {
+        var keyCode = e.keyCode || e.which;
+        //Regex for Valid Characters and hyphen i.e. Alphabets.
+        var regex = /^[A-Za-z- ]+$/;
+        //Validate TextBox value against the Regex.
+        var isValid = regex.test(String.fromCharCode(keyCode));
+        if ($(this).val().length > 45) {
+            event.preventDefault();
+        }
+        return isValid;
+    });
+
+    $("#bacs_sort_code").keypress(function (e) {
+        $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+        if ($(this).val().length > 5) {
+            event.preventDefault();
+        }
+    });
+
+    $("#bacs_account_number").keypress(function (e) {
+        $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+        if ($(this).val().length > 7) {
+            event.preventDefault();
+        }
+    });
+
+    $("#commonModal").on('show.bs.modal', function (e) {
+        if ($('#commonModal #commonModalBodyContent').html() == 'Invalid agent id') {
+            window.location = "./login";
+        }
+    });
+
+    $('#promoCodeApplyButton').attr('disabled',true);
+    let activeCollapseOne = $('#collapseOne li.active')[0];
+    let activeCollapseTwo = $('#collapseTwo li.active')[0];
+
+    if(typeof activeCollapseOne != 'undefined' && activeCollapseOne != null){
+        $('#collapseTwo').removeClass('show');
+        $('#collapseOne').addClass('show');
+    };
+
+    if(typeof activeCollapseTwo != 'undefined' && activeCollapseTwo != null){
+        $('#collapseOne').removeClass('show');
+        $('#collapseTwo').addClass('show');
+    };
+
+    $('#genericHub').on('click',function (){
+        let active = $('#collapseOne li.active')[0];
+        if(active == null || typeof active == 'undifined'){
+            window.location.href = genericHubSearch;
+        }
+    });
+
+    $('#myPetsureHub').on('click',function (){
+        let active = $('#collapseTwo li.active')[0];
+        if(active == null || typeof active == 'undifined' ){
+            var url = $("#ulmypetsurehub a:first").attr("href");
+            window.location.href = typeof url != 'undefined' && url != null && url != '' ? url : '';
+        }
+    });
+
+    
+    $('#raiseAComplaintEditModal').on('show.bs.modal', function(){
+        $('#complaintUpdateBtn').attr('disabled', true);
+    })
+
+});
+
+function init() {
+    $("#loaderModal").modal("hide");
+    // global event bind for ajax
+    $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+        if (options.url.indexOf("@hub.context@") >= 0) {
+            options.url = options.url.replace("@hub.context@", window.location.pathname.split('/')[1]);
+        }
+    });
+    $(document).bind("ajaxSend", function () {
+        $("#loaderModal").modal("show");
+    }).bind("ajaxComplete", function () {
+        $("#loaderModal").modal("hide");
+    }).bind('ajaxError', function (xhr, textStatus, error) {
+        if (textStatus.status == 0) {
+            $('#sessionExpiredErrorModal').modal('show');
+        }
+    });
+    productEvent.loadEvents();
+    policyListView.loadPolicyList();
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
+    if (loadedForMTA) {
+        $("#loaderModal").modal("hide");
+        $("#loadedForMTAModal").modal("show");
+    }
+}
+
+function updateImportantNoteWapp(){
+   var value = "N";
+   var checkBox = document.getElementById("importantNoteWapp");
+   if(checkBox.checked == true){
+     value = "Y";
+   } else {
+     value = "N";
+   }
+  productEvent.updateImportantFlagWapp($('#eventId').val(), value);
+}
+
+function updateImportantNotePet(){
+   var value = "N";
+   var checkBox = document.getElementById("importantNote");
+   if(checkBox.checked == true){
+      value = "Y";
+   } else {
+      value = "N";
+   }
+   productEvent.updateImportantFlag($('#eventId').val(), value);
+}
+
+function isEmail(email) {
+    var regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\]+\.)|([a-zA-Z\-0-9]+\.))+[a-zA-Z]{2,}$/;
+    return regex.test(email);
+}
+
+function validateMultipleEmailsCommaSeparated(emaillist) {
+    var regex = /^[\W]*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]+[\W]*,{1}[\W]*)*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]+)[\W]*$/;
+    return regex.test(emaillist);
+}
+
+function formatName(element) {
+    element.value = element.value.trim();
+    var text = element.value;
+    if (text == text.toUpperCase() || text == text.toLowerCase()) {
+        element.value = text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+    }
+}
+
+common = function () {
+    function handleAjaxError(xhr, status, error) {
+        $("#loaderModal").modal("hide");
+        if (xhr.status == 0) {
+            $('#sessionExpiredErrorModal').modal('show');
+        } else if (xhr.status == 400) {
+            if (xhr.responseText.includes("Main tree has updated")) {
+                $("#mainTreeExpiredErrorModal").modal('show');
+            } else {
+                showErrorPopup(xhr.responseText);
+            }
+        } else {
+            showErrorPopup("Error occurred while processing request..");
+        }
+    }
+
+    function showErrorPopup(message) {
+        $('#errorModalContent').html(message);
+        $('#commonErrorModal').modal('show');
+    }
+
+    return {
+        handleAjaxError: handleAjaxError,
+        showErrorPopup: showErrorPopup
+    }
+}();
+
+header = function () {
+    updateClock = function () {
+        var currentTime = new Date();
+        var currentDay = currentTime.getDay();
+        var currentDate = currentTime.getDate();
+        var currentMonth = currentTime.getMonth();
+        var currentYear = currentTime.getFullYear();
+        var currentHours = currentTime.getHours();
+        var currentMinutes = currentTime.getMinutes();
+        var currentSeconds = currentTime.getSeconds();
+
+        var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        var monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+        // Pad the minutes and seconds with leading zeros, if required
+        currentMinutes = (currentMinutes < 10 ? "0" : "") + currentMinutes;
+        currentSeconds = (currentSeconds < 10 ? "0" : "") + currentSeconds;
+
+        // Choose either "AM" or "PM" as appropriate
+        var timeOfDay = (currentHours < 12) ? "AM" : "PM";
+
+        // Convert the hours component to 12-hour format if needed
+        currentHours = (currentHours > 12) ? currentHours - 12 : currentHours;
+
+        // Convert an hours component of "0" to "12"
+        currentHours = (currentHours == 0) ? 12 : currentHours;
+
+        var date = dayNames[currentDay] + " " + currentDate + ordinal(currentDate) + " "
+            + monthNames[currentMonth] + " " + currentYear;
+        var time = currentHours + ":" + currentMinutes + ":" + currentSeconds + " " + timeOfDay;
+        // Compose the string for display
+        var currentTimeString = date + " " + time;
+
+        $("#date-time-line").html(currentTimeString);
+    };
+
+    function ordinal(date) {
+        if (date > 20 || date < 10) {
+            switch (date % 10) {
+                case 1:
+                    return "st";
+                case 2:
+                    return "nd";
+                case 3:
+                    return "rd";
+            }
+        }
+        return "th";
+    }
+
+    return {
+        updateClock: updateClock
+    }
+}();
+
+policyComplaint = function () {
+    function loadPolicyComplaint(requestPage) {
+        var pageNumber = parseInt(requestPage) + 1;
+        var personReference = $('#personReference').val();
+        var domainType = $('#domainType').val();
+        var productType = $('#productType').val();
+        var pageSize = 3;
+        $("#loaderModal").modal("show");
+        $.ajax({
+            type: 'GET',
+            url: complaintComponentURL,
+            data: {
+                "pageNumber": pageNumber,
+                "pageSize": pageSize,
+                "personReference": personReference,
+                "domainType": domainType,
+                "productType": productType
+            },
+            timeout: 5000,
+            success: function (response) {
+                if (response) {
+                    $("#loaderModal").modal("hide");
+                    $('#policyComplaintContent').html(response);
+                }
+            },
+            error: function (error) {
+                $("#loaderModal").modal("hide");
+            }
+        });
+    }
+
+    function editComplaint(id) {
+        var domainType = $('#domainType').val();
+        var productType = $('#productType').val();
+        var operationFlow = $('#operationFlow').val();
+        $("#loaderModal").modal('show');
+        $.ajax({
+            type: 'GET',
+            url: complaintComponentURL,
+            data: {
+                'id': id,
+                'domainType': domainType,
+                'productType': productType,
+                'operationFlow': operationFlow,
+                'action': 'edit-complaint'
+            },
+            success: function (response) {
+                $("#loaderModal").modal('hide');
+                $("#raiseAComplaintModalEditContent").html(response);
+                if ($("#week").is(":disabled") && $("#final").is(":disabled") && $("#closedate").is(":disabled") && $("#handerlerId").is(":disabled")) {
+                    $("#complaintUpdateBtn").attr('disabled', true);
+                } else {
+                    $("#complaintUpdateBtn").attr('disabled', false);
+                }
+                $('#raiseAComplaintEditModal').modal('show');
+            },
+            error: function (error) {
+                $("#loaderModal").modal('hide');
+            }
+        });
+    }
+
+    function clearComplaintModal() {
+        $("[name='holdingLetterCheckBox']").prop("checked", false);
+        $("[name='responseLetterCheckBox']").prop("checked", false);
+        $("[name='holdingLetterCheckBox']").removeAttr('disabled');
+        $("[name='responseLetterCheckBox']").removeAttr('disabled');
+        $("#closedate").val('');
+        $("#closedate").removeAttr('disabled');
+        $("#handerlerId").removeAttr('disabled');
+        $("#complaintUpdateBtn").removeAttr('disabled');
+        $("#complaintError").hide();
+    }
+
+    function submitUserComplaintEdit() {
+        if ($("#handerlerId").val() == "") {
+            errorMessage = "Fill Assigned Handler field";
+            $("#complaintError").html(errorMessage);
+            $("#complaintError").removeClass("d-none");
+            $("#complaintSuccess").hide();
+        }else if($('#check-final-letter-condition').val() == 'Y' && $('#final').is(':checked') && $('#closedate').val() == ""){
+            $("#complaintError").html("Please set the Date Complained Closed. If you want to send Final Response Letter.");
+            $("#complaintError").removeClass("d-none");
+            $("#complaintSuccess").hide();
+        } else {
+            $("#complaintError").hide();
+            var compForm = $('#complaintFormEdit');
+            $('#raiseAComplaintModalEditContent').val($('#policyViewQuoteRef').val());
+            var selected = [];
+            var today = new Date();
+            $("#eventId input[type=checkbox]:checked").each(function () {
+                selected.push(this.value);
+            });
+            var selectedAgent = $("#handerlerId option:selected");
+            var assignAgentId = selectedAgent.length > 0 ? selectedAgent.data("agentid"): -1;
+            var personReference = $('#personReference').val();
+            var domainType = $('#domainType').val();
+            var productType = $('#productType').val();
+
+            var data = {
+                'complaintId': compForm.find('#complaintid').val() ? compForm.find('#complaintid').val() : '',
+                'createdDate': new Date(moment(compForm.find('#createdateid').val(), "DD-MM-YYYY")),
+                'closeDate': new Date(moment(compForm.find('#closedate').val() + ' ' + today.getHours() + ':' + today.getMinutes(), "DD-MM-YYYY HH:mm")),
+                'assignAgentId': assignAgentId,
+                'assignAgentName': $('#handerlerId').val(),
+                'event': selected,
+                'events': null,
+                'personReference': personReference,
+                'domainType': domainType,
+                'productType': productType,
+                'quoteReference': $('#quoteRef').val()
+            };
+
+            $.ajax({
+                type: compForm.attr('method'),
+                url: compForm.attr('action') + '?quoteReference=' + compForm.find('input[name=quoteRef]').val(),
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                success: function (response) {
+                    $("#complaintFormEdit").trigger("reset");
+                    $('#raiseAComplaintEditModal').modal('hide');
+                    $("#complaintError").addClass("d-none");
+                    $("#commonModalBodyContent").html(response);
+                    $("#commonModal").modal('show');
+                    productEvent.loadEvents();
+                },
+                error: function (error) {
+                    $("#complaintError").removeClass("d-none");
+                    $("#complaintSuccess").hide();
+                }
+            });
+        }
+    }
+
+    function toggleUpdateToggleBtn(){
+        var week = $('#week').is(':checked');
+        var final = $('#final').is(':checked');
+        var handlerId = $('#handerlerId').val();
+        var closeDate = $('#closedate').val();
+        if(typeof complaintResponse != 'undefined' && complaintResponse && complaintResponse != null){
+            var enable = false;
+            if(week.toString().trim() != complaintResponse.result.events['WEEK_HOLDING_LETTER'].toString().trim()){
+                enable = true;
+            }else if(final.toString().trim() != complaintResponse.result.events['FINAL_RESPONSE_LETTER'].toString().trim()){
+                enable = true;
+            }else if(typeof handlerId != 'undefined' && handlerId.trim() != "" && handlerId.trim() != complaintResponse.result.assignAgentName){
+                enable = true;
+            }else if(closeDate != "" || complaintResponse.result.closeDate && complaintResponse.result.response != ""){
+                var responseCloseDate = typeof complaintResponse.result.closeDate != 'undefined' ?  moment.utc(complaintResponse.result.closeDate, "YYYY-MM-DD HH:mm:ss").format($('#domainType').val() == "PETSURE" ? "DD/MM/YYYY" : "DD-MM-YYYY") : "";
+                if(closeDate != responseCloseDate){
+                    enable = true;
+                }
+            }
+
+            if(enable){
+                $('#complaintUpdateBtn').attr('disabled', false);
+            }else{
+                $('#complaintUpdateBtn').attr('disabled', true);
+            }
+        }
+    }
+    
+
+    return {
+        loadPolicyComplaint: loadPolicyComplaint,
+        editComplaint: editComplaint,
+        submitUserComplaintEdit: submitUserComplaintEdit,
+        toggleUpdateToggleBtn: toggleUpdateToggleBtn
+    }
+
+}();
+
+policyLedger = function () {
+    function loadPolicyLedger(requestPage) {
+        ctalk.startCtalkCallRecording();
+        var personReference = $('#personReference').val();
+        var mainTreeVersion = $('#mainTreeVersion').val();
+        var domainType = $('#domainType').val();
+        var productType = $('#productType').val();
+        $("#loaderModal").modal('show');
+        $.ajax({
+            type: 'GET',
+            url: policyLedgerComponentURL,
+            data: {
+                'channel': 'HUB',
+                'personReference': personReference,
+                'mainTreeVersion': mainTreeVersion,
+                'requestPage': requestPage,
+                'domainType': domainType,
+                'productType': productType
+            },
+            success: function (response) {
+                $("#loaderModal").modal('hide');
+                $('#policyLedger').html(response);
+            },
+            error: function (error) {
+                $("#loaderModal").modal('hide');
+            }
+        });
+    };
+
+    function hideBacsFormErrors() {
+        var form = $('#bacsFormId');
+        $.map($(form)[0], function (input, i) {
+            if (!input.checkValidity()) {
+            } else {
+                $(input).parent().find(".alert").addClass('d-none');
+            }
+        });
+    }
+
+    function bacsFormValid() {
+        if ($('#bacs_account_name').val().trim() == "" || $('#bacs_bank_name').val().trim() == "" || $('#bacs_sort_code').val().trim() == "" || $('#bacs_account_number').val().trim() == "" || $('#refund_reason').val().trim() == "") {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    function executeBacsProcess(_this) {
+        if (!bacsFormValid()) {
+            errorMessage = "Fill all required fields.";
+            $("#bacsErrorMsgDiv").html(errorMessage);
+            $("#bacsErrorMsgDiv").show();
+        } else {
+            var BACsForm = $('#bacsFormId');
+            values = BACsForm.serializeArray();
+            for (index = 0; index < values.length; ++index) {
+                if (values[index].name == "refundedAmount") {
+                    var amount = "-" + (values[index].value).replace('£', '');
+                    values[index].value = amount;
+                } else if (values[index].name == "totalCostOfPolicy") {
+                    values[index].value = (values[index].value).replace('£', '');
+                }
+            }
+            var requestBody = jQuery.param(values);
+            $("#bacsErrorMsgDiv").hide();
+            $("#bacsFormModal").modal("hide");
+            $("#loaderModal").modal("show");
+            $.ajax({
+                type: BACsForm.attr('method'),
+                url: BACsForm.attr('action'),
+                data: requestBody,
+                success: function (response) {
+                    $("#loaderModal").modal("hide");
+                    if (response.indexOf("error-response") > -1) {
+                        showErrorContent(response);
+                        //scrollToErrorMessage();
+                    } else {
+                        $('#policyLedger').html(response);
+                        productEvent.loadEvents();
+                    }
+
+                },
+                error: common.handleAjaxError
+            });
+        }
+    };
+
+    function loadPriceBreakdown(tripId) {
+        var personReference = $('#personReference').val();
+        var domainType = $('#domainType').val();
+        var productType = $('#productType').val();
+        $("#loaderModal").modal("show");
+        $.ajax({
+            type: 'GET',
+            url: policyLedgerComponentURL,
+            data: {
+                'tripId': tripId,
+                'action': 'load-price-breakdown',
+                'personReference': personReference,
+                'domainType': domainType,
+                'productType': productType
+            },
+            success: function (response) {
+                $("#loaderModal").modal("hide");
+                $('#priceBreakdownModalContent').html(response);
+                $("#priceBreakdownModal").modal("show");
+            },
+            error: function (error) {
+                $("#loaderModal").modal("hide");
+            }
+        });
+    };
+
+    function PriceBreakdownPopup(ledgerId) {
+        var domainType = $('#domainType').val();
+        var productType = $('#productType').val();
+        $("#loaderModal").modal("show");
+        $.ajax({
+            type: 'POST',
+            url: policyLedgerComponentURL,
+            data: {
+                'ledgerId': ledgerId,
+                'action': 'net-price-breakdown',
+                'domainType': domainType,
+                'productType': productType
+            },
+            success: function (response) {
+                $("#loaderModal").modal("hide");
+                $('#netPriceBodyContent').html(response);
+                $("#netPricePopup").modal("show");
+            },
+            error: function (error) {
+                $("#loaderModal").modal("hide");
+            }
+        });
+    };
+
+    return {
+        loadPolicyLedger: loadPolicyLedger,
+        executeBacsProcess: executeBacsProcess,
+        hideBacsFormErrors: hideBacsFormErrors,
+        loadPriceBreakdown: loadPriceBreakdown,
+        PriceBreakdownPopup: PriceBreakdownPopup
+    }
+}();
+
+policyDocument = function () {
+    function loadPolicyDocuments() {
+        if (hasActivePolicy) {
+            ctalk.startCtalkCallRecording();
+            var userId = new URLSearchParams(window.location.search).get('userId');
+            $.ajax({
+                type: 'GET',
+                url: documentComponentURL,
+                data: {
+                    'channel': 'HUB',
+                    'userId': userId,
+                    'agentName': 'test'
+                },
+                success: function (response) {
+                    $("#loaderModal").modal("hide");
+                    if (response) {
+                        $('#documents-data').html(response);
+                    }
+                },
+                error: function (error) {
+                }
+            });
+        }
+    };
+
+    function hideEmailError() {
+        $("#email-error").hide();
+    }
+
+    function removeLoadingMessage() {
+        var loadingMessage = document.getElementById("loading-message");
+        if (typeof (loadingMessage) != 'undefined' && loadingMessage != null) {
+            loadingMessage.remove();
+        }
+    }
+
+    function emailDocuments() {
+        var emails = $('#emails').val();
+        if (!validateMultipleEmailsCommaSeparated(emails)) {
+            $("#email-error").show();
+            return;
+        } else {
+            emails = emails.replace(/\s+/g, '');
+            var sendEmailForm = $('#sendEmailForm');
+            var policyReference = $('#sendPolicyRef').val();
+            var data = {
+                "policyReference": policyReference,
+                "email": emails
+            }
+            $.ajax({
+                type: sendEmailForm.attr('method'),
+                url: sendEmailForm.attr('action'),
+                data: data,
+                success: function (response) {
+                    $("#loaderModal").modal("hide");
+                    $('#documentsModal').modal('hide');
+                    $('#commonModalBodyContent').html(response);
+                    $('#commonModal').modal('show');
+
+                    hideEmailError();
+                },
+                error: function (error) {
+                    $("#loaderModal").modal("hide");
+                    $('#commonModalBodyContent').html(response);
+                    $('#commonModal').modal('show');
+                }
+            });
+        }
+    }
+
+    function sendCsDocument() {
+        var email = $('#organiserEmail').val();
+        if (typeof (email) != 'undefined' && email != null && !isEmail(email)) {
+            $("#cs-doc-email-error").show();
+            return;
+        } else {
+            var form = $("#sendCsDocForm");
+            var policyReference = $('#policyViewPolicyRef').val();
+            var personReference = $('#personReference').val();
+            var quoteReference = $('#policyViewQuoteRef').val();
+            var documentType = $('#documentType').val();
+            var domainType = $('#domainType').val();
+            var productType = $('#productType').val();
+            if (Object.keys(form).length > 0) {
+                $("#loaderModal").modal("show");
+                $.ajax({
+                    type: form.attr('method'),
+                    url: form.attr('action'),
+                    data: {
+                        'personReference': personReference,
+                        'quoteReference': quoteReference,
+                        'action': documentType,
+                        'email': email,
+                        'form_action': 'send-cs-document',
+                        'domainType': domainType,
+                        'productType': productType
+                    },
+                    success: function (response) {
+                        $("#loaderModal").modal("hide");
+                        $(".modal-backdrop").remove();
+                        $("#cs-doc-email-error").hide();
+                        if (response) {
+                            $('#csModalBodyContent').html(response);
+                            $('#csDocumentPopup').modal('show');
+                            productEvent.loadEvents();
+                        }
+                    },
+                    error: function (error) {
+                        $("#loaderModal").modal("hide");
+                        $(".modal-backdrop").remove();
+                    }
+                });
+            }
+        }
+    }
+
+    return {
+        loadPolicyDocuments: loadPolicyDocuments,
+        hideEmailError: hideEmailError,
+        removeLoadingMessage: removeLoadingMessage,
+        sendCsDocument: sendCsDocument,
+        emailDocuments: emailDocuments
+    }
+}();
+
+policyListView = function () {
+    function loadPolicyList() {
+        $.ajax({
+            type: 'GET',
+            url: policyHistoryComponentURL,
+            data: {
+                'personReference': $('#personReference').val(),
+                'domainType': $('#domainType').val(),
+                'productType': $('#productType').val()
+            },
+            success: function (response) {
+                if (response) {
+                    $('#policyListView').replaceWith(response);
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function retrievePolicy(_quoteRef, _policyRef) {
+        $('#policyViewQuoteRef').val(_quoteRef);
+        $('#policyViewPolicyRef').val(_policyRef);
+        $('#quoteReferenceForEvent').val(_quoteRef);
+        $("#policyView-tab").trigger("click");
+    }
+
+    return {
+        loadPolicyList: loadPolicyList,
+        retrievePolicy: retrievePolicy
+    }
+}();
+
+productEvent = function () {
+    function loadEvents() {
+        loadEventsByPageNumber(0);
+    };
+
+    function hideEventNoteError() {
+        if ($('#eventNoteError').is(":visible")) {
+            $('#eventNoteError').addClass('d-none');
+        }
+    }
+
+function hideDescriptionError() {
+        if ($('#descriptionError').is(":visible")) {
+            $('#descriptionError').addClass('d-none');
+        }
+    }
+
+    function closeAddEventNoteModal() {
+        $('#eventNoteError').addClass('d-none');
+        $('#eventNoteText').val('');
+        $("#noteTypeList").val($("#noteTypeList option:first").val());
+        $('#important-note').val("N");
+        $('#eventNoteModal').modal('hide');
+    }
+
+    function closeAddEventSavedTheSaleModal() {
+        $('#descriptionError').addClass('d-none');
+        $('#eventDescriptionText').val('');
+        $('#save-sale-important-note').val("N");
+        $('#eventSaveTheSaleModal').modal('hide');
+        $("#addingErrorsave").hide();
+
+    }
+
+        function closeAddEventNoteModalWapp() {
+            $('#eventNoteError').addClass('d-none');
+            $('#eventNoteText').val('');
+            $("#noteTypeList").val($("#noteTypeList option:first").val());
+            $('#important-note-wapp').val("N");
+            $('#eventNoteModal').modal('hide');
+        }
+
+    function loadEventsByPageNumber(pageNo) {
+        $("#loaderModal").modal('show');
+        var personReference = new URLSearchParams(window.location.search).get('personReference');
+        var quoteReference = new URLSearchParams(window.location.search).get('quoteReference');
+        var isViewPolicy = new URLSearchParams(window.location.search).get('isViewPolicy');
+        isViewPolicy = isViewPolicy == 'true' ? isViewPolicy : 'false';
+        var domainType = $("#domainType").val();
+        var productType = $("#productType").val();
+        $.ajax({
+            type: 'POST',
+            url: eventComponentURL,
+            data: {
+                'personReference': personReference,
+                'quoteReference': quoteReference,
+                'showAllEvents': $('#showAllEvents').is(':checked'),
+                'showAutomatedEvents': $('#showAutomatedEvents').is(':checked'),
+                'pageNo': pageNo + 1,
+                'channel': 'HUB',
+                'domainType': domainType,
+                'productType': productType,
+                'isViewPolicy': isViewPolicy
+            },
+            success: function (response) {
+                $("#loaderModal").modal('hide');
+                $('#eventListView').html(response);
+            },
+            error: function (error) {
+                $("#loaderModal").modal('hide');
+            }
+        });
+    };
+
+    function saveManualEventNote() {
+        if ($('#eventNoteText').val()) {
+            var eventForm = $('#eventNoteForm');
+            $('#eventAdd').attr('disabled', true);
+            $.ajax({
+                type: eventForm.attr('method'),
+                url: eventForm.attr('action'),
+                data: eventForm.serialize(),
+                success: function (response) {
+                    $("#eventNoteForm").trigger("reset");
+                    $('#important-note').val("N");
+                    $('#eventNoteModal').modal('hide');
+                    $('#eventAdd').attr('disabled', false);
+                    if (response && response.status != "error") {
+                        loadEvents();
+                    }
+                },
+                error: function (error) {
+                    $('#eventAdd').attr('disabled', false);
+                    $('#important-note').val("N");
+                }
+            });
+        } else {
+            $('#eventNoteError').removeClass('d-none');
+        }
+    };
+
+ function saveManualEventNoteWapp() {
+        if ($('#eventNoteText').val()) {
+            var eventForm = $('#eventNoteFormWapp');
+            $('#eventAdd').attr('disabled', true);
+            $.ajax({
+                type: eventForm.attr('method'),
+                url: eventForm.attr('action'),
+                data: eventForm.serialize(),
+                success: function (response) {
+                    $("#eventNoteFormWapp").trigger("reset");
+                    $('#important-note-wapp').val("N");
+                    $('#eventNoteModal').modal('hide');
+                    $('#eventAdd').attr('disabled', false);
+                    if (response && response.status != "error") {
+                        loadEvents();
+                    }
+                },
+                error: function (error) {
+                    $('#eventAdd').attr('disabled', false);
+                    $('#important-note-wapp').val("N");
+                }
+            });
+        } else {
+            $('#eventNoteError').removeClass('d-none');
+        }
+    };
+
+    function saveTheSale() {
+        if ($('#eventDescriptionText').val()) {
+            var saveTheSaleForm = $('#saveTheSaleForm');
+            $('#eventAdd').attr('disabled', true);
+            $.ajax({
+                type: saveTheSaleForm.attr('method'),
+                url: saveTheSaleForm.attr('action'),
+                data: saveTheSaleForm.serialize(),
+                success: function (response) {
+                    $("#saveTheSaleForm").trigger("reset");
+                    $('#save-sale-important-note').val("N");
+                    $('#eventSaveTheSaleModal').modal('hide');
+                    $('#eventAdd').attr('disabled', false);
+                    if (response && response.status != "error") {
+                        loadEvents();
+                    }
+                },
+                error: function (error) {
+                    $('#eventAdd').attr('disabled', false);
+                    $('#save-sale-important-note').val("N");
+                    $("#addingErrorsave").show();
+                }
+            });
+        } else {
+            $('#descriptionError').removeClass('d-none');
+        }
+    };
+
+    function loadEventRecordView(eventType, eventNote, eventRefNo, eventAgent, eventDateTime, eventId, impFlag) {
+        $('#eventType').val(eventType);
+        $("#eventNote").empty();
+        $('#eventNote').append(eventNote);
+        eventRefNo != "null" ? $('#eventRefNo').val(eventRefNo) : $('#eventRefNo').val('');
+        $('#eventAgent').val(eventAgent);
+        $('#eventDateTime').val(eventDateTime);
+        $('#eventId').val(eventId);
+        $('#importantNote').prop('checked', impFlag == 'Y');
+        $('#importantNoteWapp').prop('checked', impFlag == 'Y');
+        $('#event-record-view').modal('show');
+    }
+
+    function closeDeceaseEventNoteModal() {
+        $('#check-customer-deceased').is(':checked') ? $('#check-customer-deceased').prop('checked', false) : '';
+        $('#eventNoteError').addClass('d-none');
+        $('#eventNoteText').val('');
+        $("#noteTypeList").val($("#noteTypeList option:first").val());
+        $('#deceaseEventNoteModal').modal('hide');
+    }
+
+    function updateImportantFlag(eventId, value) {
+        $('#event-record-view').modal('hide');
+        $("#loaderModal").modal('show');
+        var personReference = new URLSearchParams(window.location.search).get('personReference');
+        var quoteReference = new URLSearchParams(window.location.search).get('quoteReference');
+        var productType = $("#productType").val();
+        var domainType = $("#domainType").val();
+        $.ajax({
+            type: 'POST',
+            url: eventComponentURL,
+            data: {
+                'personReference': personReference,
+                'quoteReference': quoteReference,
+                'eventId': eventId,
+                'important': value,
+                'domainType': domainType,
+                'productType': productType,
+                'action': 'update-important'
+            },
+            success: function (response) {
+                $("#loaderModal").modal('hide');
+                loadEvents();
+            },
+            error: function (error) {
+                $("#loaderModal").modal('hide');
+            }
+        });
+    }
+
+    function updateImportantFlagWapp(eventId, value) {
+        $('#event-record-view').modal('hide');
+        $("#loaderModal").modal('show');
+        var personReference = new URLSearchParams(window.location.search).get('personReference');
+        var quoteReference = new URLSearchParams(window.location.search).get('quoteReference');
+        var productType = $("#productType").val();
+        var domainType = $("#domainType").val();
+        $.ajax({
+            type: 'POST',
+            url: eventComponentURL,
+            data: {
+                'personReference': personReference,
+                'quoteReference': quoteReference,
+                'eventId': eventId,
+                'important': value,
+                'domainType': domainType,
+                'productType': productType,
+                'action': 'update-important-wapp'
+            },
+            success: function (response) {
+                $("#loaderModal").modal('hide');
+                loadEvents();
+            },
+            error: function (error) {
+                $("#loaderModal").modal('hide');
+            }
+        });
+    }
+
+    return {
+        saveManualEventNote: saveManualEventNote,
+        loadEvents: loadEvents,
+        loadEventsByPageNumber: loadEventsByPageNumber,
+        loadEventRecordView: loadEventRecordView,
+        closeAddEventNoteModal: closeAddEventNoteModal,
+        hideEventNoteError: hideEventNoteError,
+        closeDeceaseEventNoteModal: closeDeceaseEventNoteModal,
+        updateImportantFlag: updateImportantFlag,
+        saveManualEventNoteWapp:saveManualEventNoteWapp,
+        closeAddEventNoteModalWapp:closeAddEventNoteModalWapp,
+        updateImportantFlagWapp:updateImportantFlagWapp,
+        closeAddEventSavedTheSaleModal:closeAddEventSavedTheSaleModal,
+        saveTheSale:saveTheSale,
+        hideDescriptionError:hideDescriptionError
+    }
+}();
+
+geoLocation = function () {
+    function loadContent() {
+        $.ajax({
+            type: 'GET',
+            url: geoLocationComponentURL,
+            data: {
+                'form_action': 'get-content'
+            },
+            success: function (response) {
+                $('#geoFrame').contents().find("body").html(response.body);
+            },
+            error: function (error) {
+                $('#geoFrame').contents().find("body").html('<p>error occured while loading geo data</p>');
+            }
+        });
+    }
+
+    return {
+        loadContent: loadContent
+    }
+}();
+
+vulnerableCustomer = function () {
+    function displayContent() {
+        $.ajax({
+            type: 'GET',
+            url: bannerComponentURL,
+            data: {
+                'personReference': $("form#vulnerableCustomerForm input[name=personReference]").val(),
+                'productType': $("form#vulnerableCustomerForm input[name=productType]").val(),
+                'domainType': $("form#vulnerableCustomerForm input[name=domainType]").val()
+            },
+            success: function (response) {
+                $('#banner').replaceWith(response);
+            },
+            error: function (error) {
+                $('#banner').html('<p>error occured while loading banner</p>');
+            }
+        });
+    }
+
+    return {
+        displayContent: displayContent
+    }
+}();
+
+function navigateToPolicyView(quoteReference, policyReference, breadCrumb, personReference, domainType, productType, tabNavigation) {
+    window.location = policyViewPageURL + '?quoteReference=' + encodeURIComponent(quoteReference) + '&policyReference=' + encodeURIComponent(policyReference) +
+        '&personReference=' + encodeURIComponent(personReference) + '&breadCrumb=' + breadCrumb + '&domainType=' + domainType + '&productType=' + productType +
+        '&tabNavigation=' + tabNavigation;
+}
+
+// Idle time out - 45min
+$(function () {
+    function timeChecker() {
+        setInterval(function () {
+            var storedTimeStamp = localStorage.getItem("lastTimeStamp");
+            timeCompare(storedTimeStamp);
+        }, 5000);
+    }
+
+    function timeCompare(timeString) {
+        var maxMinutes = 44; // will expire in 45 min
+        var currentTime = new Date();
+        var pastTime = timeString != null ? new Date(timeString) : new Date();
+        var timeDiff = currentTime - pastTime;
+        var minPast = Math.floor((timeDiff / 60000));
+
+        if (window.location.pathname == "/login") {
+            $("#loaderModal").modal('show');
+            return true;
+        } else if (minPast > maxMinutes) {
+            localStorage.removeItem("lastTimeStamp");
+            window.location = "./login";
+            $("#loaderModal").modal('show');
+            return false;
+        } else {
+        }
+    }
+
+    if (typeof (Storage) !== "undefined") {
+        $(document).mousemove(function () {
+            var timeStamp = new Date();
+            localStorage.setItem("lastTimeStamp", timeStamp);
+        });
+
+        timeChecker();
+    }
+});
+
+var showCommonModalMessage = function (message) {
+    $('#commonModalBodyContent').html(message);
+    $('#commonModal').modal('show');
+}
+
+var showErrorContent = function (response) {
+    let messageCode, message;
+    if (typeof response === 'string') {
+        messageCode = $(response).find('#messageCode').text();
+        message = $(response).find('#responseMsg').text();
+    } else {
+        messageCode = response && response.messageCode || '00';
+        message = response && response.message || "Oops, Something went wrong. Please try again. If the problem persists, please contact the system support team with the relevant quote ID...";
+    }
+    if (messageCode == '2663') {
+        $("#updateSessionModal").modal("show");
+    } else {
+        $('#commonModalBodyContent').html(message);
+        $('#commonModal').modal('show');
+    }
+}
+
+petPromoCode = function () {
+    function applyPromoCode() {
+        $("#loaderModal").modal('show');
+        var form = $("#pet-promo-code-form");
+        var adjustmentType = "PROMO_CODE";
+        var description = "Test description";
+        $.ajax({
+            type: 'POST',
+            url: petPomoCodeUrl,
+            data: form.serialize() + '&adjustmentType=' + adjustmentType + '&description=' + description,
+            success: function (response) {
+                $("#loaderModal").modal('hide');
+                if (response.status == 'success') {
+                    let promoCode = response.promoCodeObj;
+                    if(!$.isEmptyObject(promoCode)){
+                        if(promoCode.isValid){
+                            $('#pet-promo-code-form .valid-msg').removeClass('d-none');
+                        }
+                        else{
+                            $('#pet-promo-code-form .invalid-msg').removeClass('d-none');
+                        }
+                    }
+                    else{
+                        $('#pet-promo-code-form .valid-msg').addClass('d-none');
+                        $('#pet-promo-code-form .invalid-msg').addClass('d-none');
+                    }
+                    $('#mainTreeVersion').val(response.mainTreeVersion);
+                    $('#promoCodeApplyButton').attr('disabled', true);
+                }
+                else{
+                    $('#commonModalBodyContent').html('Error occurred while applying Discount Code..');
+                    $('#commonModal').modal('show');
+                }
+            },
+            error: function (error) {
+                $("#loaderModal").modal('hide');
+                $('#commonModalBodyContent').html('Error occurred while applying Discount Code..');
+                $('#commonModal').modal('show');
+            }
+        });
+    }
+
+    function hideMsg(){
+        $('#promoCodeApplyButton').attr('disabled', false);
+        $('#pet-promo-code-form .valid-msg').addClass('d-none');
+        $('#pet-promo-code-form .invalid-msg').addClass('d-none');
+    }
+
+    return {
+        applyPromoCode: applyPromoCode,
+        hideMsg: hideMsg
+    }
+}();

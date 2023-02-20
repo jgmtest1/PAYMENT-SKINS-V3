@@ -1,0 +1,47 @@
+
+$(document).ready(function () {
+  $.ajaxSetup({
+    beforeSend: function (xhr, setting) {
+      try {
+        if (xhr != null && xhr != 'undefined') {
+          if (xhr.responseJSON.status == 'error' && xhr.responseJSON.message == 'Invalid agent ID') {
+            $('#commonModal').hide();
+            $('#commonModal').addClass('d-none');
+            $('#commonModalBodyContent').html(xhr.responseJSON.message + '. Redirect to Login.');
+            $("#loaderModal").modal("show");
+            window.location = './login';
+          }
+        }
+      }
+      catch (err) {
+
+      }
+
+    },
+    complete: function (xhr) {
+      var message = 'Invalid agent ID';
+      try {
+        if (xhr != null && xhr != 'undefined') {
+          if (xhr.responseText != null && xhr.responseText != 'undefined' && xhr.responseText.includes(message)) {
+            $('#commonModal').addClass('d-none');
+            $("#loaderModal").modal("show");
+            window.location = './login';      
+        }
+          if (xhr.responseJSON.status == 'error' && xhr.responseJSON.message == 'Invalid agent ID') {
+            $('#commonModal').hide();
+            $('#commonModal').addClass('d-none');
+            $('#commonModalBodyContent').html(xhr.responseJSON.message + '. Redirect to Login.');
+            $("#loaderModal").modal("show");
+            window.location = './login';
+          }
+          
+        }
+      }
+      catch (err) {
+
+      }
+    }
+
+  });
+})
+
