@@ -1,0 +1,1 @@
+function applyBrowserInfo(){var c=window.innerWidth||document.body.clientWidth;var b=window.innerHeight||document.body.clientHeight;var a=c+"X"+b;$("#screenResolution").val(a);$("#timezone").val(new Date().getTimezoneOffset());$("#screenColorDepth").val(screen.colorDepth);$("#javaEnabled").val(navigator.javaEnabled());}

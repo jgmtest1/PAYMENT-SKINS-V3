@@ -1,0 +1,642 @@
+@import url("payPage.css");
+
+@font-face {
+  font-family: 'Latinotype-Goldplay-SemiBold';
+  src: url('../fonts/Latinotype-Goldplay-SemiBold.eot');
+  src: url('../fonts/Latinotype-Goldplay-SemiBold.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Latinotype-Goldplay-SemiBold.otf') format('otf'),
+    url('../fonts/Latinotype-Goldplay-SemiBold.svg#Latinotype-Goldplay-SemiBold') format('svg'),
+    url('../fonts/Latinotype-Goldplay-SemiBold.ttf') format('truetype'),
+    url('../fonts/Latinotype-Goldplay-SemiBold.woff') format('woff'),
+    url('../fonts/Latinotype-Goldplay-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Latinotype-Goldplay-Medium';
+  src: url('../fonts/Latinotype-Goldplay-Medium.eot');
+  src: url('../fonts/Latinotype-Goldplay-Medium.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Latinotype-Goldplay-Medium.otf') format('otf'),
+    url('../fonts/Latinotype-Goldplay-Medium.svg#Latinotype-Goldplay-Medium') format('svg'),
+    url('../fonts/Latinotype-Goldplay-Medium.ttf') format('truetype'),
+    url('../fonts/Latinotype-Goldplay-Medium.woff2') format('woff2'),
+    url('../fonts/Latinotype-Goldplay-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Latinotype-Goldplay-Alt-Bold';
+  src: url(../fonts/Latinotype-Goldplay-Alt-Bold.eot);
+  src: url(../fonts/Latinotype-Goldplay-Alt-Bold.eot?#iefix) format('embedded-opentype'),
+    url(../fonts/Latinotype-Goldplay-Alt-Bold.otf) format('otf'),
+    url(../fonts/Latinotype-Goldplay-Alt-Bold.svg#Latinotype%20-%20Goldplay%20Alt%20Bold) format('svg'),
+    url(../fonts/Latinotype-Goldplay-Alt-Bold.ttf) format('truetype'),
+    url(../fonts/Latinotype-Goldplay-Alt-Bold.woff) format('woff'),
+    url(../fonts/Latinotype-Goldplay-Alt-Bold.woff2) format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+#paypage {  
+  font-family: 'Latinotype-Goldplay-SemiBold';
+  margin: 0 auto;
+  width: 100%;  
+  /* height: 37em; */
+  border: 1px solid #e4e4e4;
+  background: #fff;
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 0 30px;
+  position: relative;
+}
+#messagePanel {
+  display: none;
+}
+.centered {
+  margin: 0 auto;
+  width: 100%; 
+}
+
+#cardEntryPanel { 
+  margin-top: 0;
+}
+
+#progressSpinnerImage {
+  margin: auto;
+}
+
+#indicateRequiredFieldsPanel,
+#addressPanel {
+  display: none;
+}
+
+#purchaseDetailsPanel h3,
+#purchaseDetailsGoods {
+  display: none;
+}
+
+#paymentDetailsPanel h3 {
+  display: none;
+}
+
+.requiredMessage {
+  color: #282828;
+}
+
+.labelHelpImg {
+  display: none;
+  width: 18px;
+  height: 18px;
+  margin-left: 0 !important;
+  opacity: 0;
+}
+
+.formInput {
+  box-shadow: none !important;
+  border-radius: 10px !important;
+  height: 48px;
+}
+
+.formInput:focus {
+  border-color: #FD0267;
+  box-shadow: none !important;
+  border-radius: 10px !important;
+}
+
+.formLabel {
+  width: 100%;
+  margin-top: 0;
+}
+
+.formLabel label,
+.formLabel span {
+  color: #040741 !important;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.linkText,
+#aboutMasterpass {
+  color: #222222;
+  vertical-align: text-top;
+  text-decoration: none !important;
+}
+
+#commands { 
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between; 
+  position: relative;
+}
+
+#commands .btn { 
+  font-family: 'Latinotype - Goldplay SemiBold';
+  font-weight: 600;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 50px;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  -o-border-radius: 50px;  
+  width: 15%;
+  min-width: 100px;
+  min-height: 46px;
+  padding: 8px 10px;
+  font-family: 'Latinotype-Goldplay-SemiBold';
+  font-size: 14px;
+}
+
+#commands .btn.primary {
+  color: #fff;
+  background: #E7005D;
+  cursor: pointer;
+  position: absolute;
+  left: 25%;  
+  font-family: 'Latinotype-Goldplay-SemiBold';
+}
+
+#commands .btn.secondary {
+  color: #222222;
+  border-color: #222222;
+  cursor: pointer;
+}
+
+#cardEntryForm {
+  width: 100%;
+  padding-top: 2px;
+  padding-bottom: 50px;
+}
+#paynowButtonHolder, #btnCancel {
+  margin-top: 0;
+}
+@media screen and (max-width: 30em) {
+  @media (min-device-width: 753px) and (max-device-width: 1180px) {
+    #cardEntryForm {
+      width: 100%;
+    }
+
+    #paypage {
+      width: 100%;     
+      box-sizing: border-box;
+    }    
+  }
+
+
+}
+
+.formSection {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+#purchaseDetailsAmount {
+  flex-direction: row;
+  color: #040741;  
+  border-bottom: 1px solid #e4e4e4;
+  padding-bottom: 6px;
+  margin: 20px 0;
+  font-size: 1.25em;
+}
+
+#purchaseDetailsAmount .formLabel {
+  flex: 1;
+  font-weight: 600;
+}
+
+#purchaseDetailsAmount .bodyText {
+  color: #040741;
+  font-family: 'Latinotype-Goldplay-SemiBold';
+  font-weight: 600;
+}
+
+.formLabel {
+  padding-left: 0 !important;
+  margin-bottom: 15px !important;
+}
+
+.formInput {
+  box-sizing: border-box;  
+  box-shadow: 0px 3px #e8e8e8 !important;
+}
+
+.formInput::placeholder {
+  color: transparent;
+}
+
+span[id$="HelpPanel"]:not(#cscLabelHelpPanel) {
+  display: none !important;
+  background: url("../images/helpIcon-wapp.gif") no-repeat right;
+  width: 18px;
+  height: 18px;
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 25px;
+}
+
+#confirmCheck1HelpPanel {
+  display: inline-block !important;
+  top: 0 !important;
+}
+
+#expirySection,
+#cscSection {
+  display: block;
+}
+
+#expiryLabelPanel,
+#cscLabelPanel {
+  width: 100%;
+}
+
+#expiryLabelPanel {
+  margin-bottom: 26px !important;
+}
+
+#expirySection .dateDropDownLabel {
+  left: 0;
+  top: 25px;
+  width: auto;
+  height: auto;
+  color: #040741;
+  font-family: 'Latinotype-Goldplay-Medium';
+  font-weight: 500;
+  font-size: 14px;
+}
+
+#expirySection #expiryYearLabel {  
+  left: 55%;
+}
+
+#expirySection .dateDropDownLabel .required {
+  display: none;
+}
+
+#expiryMonth,
+#startMonth,
+#expiryYear,
+#startYear {  
+  width: 45%;
+
+}
+
+#expiryYear,
+#startYear {
+  margin-left: 9%;
+}
+
+#expirySection select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  background-color: transparent;
+}
+
+#csc,
+#confirmCsc,
+#issue {  
+  width: 45%;
+}
+
+#paypage div[role="contentinfo"] { 
+  position: relative;  
+}
+
+#footer {
+  display: flex;  
+  position: absolute;
+  right: 0px;
+  top: -75px;
+  flex-direction: row-reverse;
+  width: 40%;  
+  margin: 0;
+}
+
+#btnCancel { 
+  position: absolute;
+  left: 0;
+  border-color: #e8e8e8 !important;
+}
+
+#paymentDetailsPanel .visa, #paymentDetailsPanel .mastercard{
+  background-size: 6%;
+  background-position: 98% 50%;
+}
+#vbvAcceptanceMarkLink:after {
+  background: url(../images/barclaycard-logo.png) no-repeat center center/contain;
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  top: -100px;
+  right: 0px;
+  bottom: 0;
+  width: 180px;
+  height: 105px;
+  z-index: 10;
+}
+
+
+.acceptanceMarkImg {
+  max-height: 3.5em !important;  
+  max-width: 8.5em !important;
+}
+
+#vbvAcceptanceMarkImg {
+  height: auto;
+}
+
+.tooltip {
+  left: -20px;
+  top: -9px;
+  font-size: 14px;
+  color: #c00;
+  padding-bottom: 0em;  
+  width: 80%;
+}
+
+.tooltip .tooltipText,
+.tooltip .tooltipBottom {
+  background-image: none;
+}
+
+div.inputError {
+  background: none;
+}
+
+#cscDialog {
+  transform: translate(-50%, 0px);
+  left: 50%;
+}
+
+#cscDescLink {
+  display: none;
+}
+
+#confirmCheck1Section {
+  display: none;
+}
+
+#frHeading,
+.success h2,
+#storeName {
+  color: #fd0267;
+}
+
+#mainErrorDiv #headerText {
+  display: none;
+}
+
+#amexAcceptanceMark,
+#jcbAcceptanceMark,
+#upiAcceptanceMark {
+  display: none;
+}
+
+div.inputValid {
+  background-image: none;
+}
+
+.logo {
+  display: none;
+}
+
+#cardNumber,
+#cardholderName {
+  width: 100%;
+}
+
+.return-txt,
+#returnText {
+  width: 542px;
+  display: block;
+  line-height: 1.8em;
+}
+
+#cardholderNameRequired,
+#cardNumberRequired,
+#expiryRequired,
+#cscRequired {
+  display: none;
+}
+
+@media only screen and (max-width: 580px) {
+
+  .return-txt,
+  #returnText {
+    width: 100% !important;
+    padding: 0 20px;    
+  }
+}
+
+/*Media Query*/
+@media only screen and (min-width: 1200px) {
+  #paypage {
+    width: 45% !important;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  #paypage {
+    width: 65%;
+  }
+}
+
+@media screen and (min-width: 742px) and (max-width: 1180px) {
+  #paypage {
+    width: 65% !important;
+  }
+
+  .acceptanceMarkImg {
+    max-height: 2.5em !important;
+    max-width: 7.5em !important;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+
+  #cardEntryPanel {
+    margin-left: 0;
+  }
+
+  #vbvAcceptanceMarkLink:after {
+    width: 120px;
+    top: -105px;
+  }
+
+  #commands {
+    margin-top: 1em;
+  }
+
+  #commands .btn {
+    width: 20%;
+    top: 0px !important;
+    min-width: 70px;
+    padding: 0 12px;
+    font-size: 12px;
+    min-height: 40px;
+  }
+
+  .formSection {
+    margin-bottom: 25px;
+  }
+
+  .tooltipText {
+    width: 275px;
+    padding: 10px 0 0 25px;
+  }
+
+  .acceptanceMarkImg {
+    max-height: 1.8em !important;
+    max-width: 7.5em !important;
+  }
+
+  .acceptanceMarkLink {
+    margin-right: 0;
+  }
+  #footer {    
+    top: -65px;
+  }
+  
+}
+@media (min-device-width: 540px) and (max-device-width: 575px) {
+  
+  #paypage {
+    width: 30em;
+  }
+}
+
+iframe {
+  width: 100%;
+}
+
+@media only screen and (max-device-width: 400px) {
+  #commands .btn {
+    min-width: 55px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .centered {
+    margin-left: 0;
+  }
+
+  #commands .btn {
+    width: 15%;
+    top: -48px;
+    min-width: 60px;
+    padding: 0 12px;
+    font-size: 10px;
+    min-height: 30px;
+  }
+
+}
+
+@media (min-device-width: 321px) and (max-device-width: 420px) {
+  #paymentDetailsPanel .visa, #paymentDetailsPanel .mastercard{
+    background-size: 10%;
+  }
+
+  #commands .btn {
+    width: 22%;
+    min-width: 45px;
+    padding: 5px 8px;
+    font-size: 10px;
+    min-height: 25px;
+  }
+
+  #vbvAcceptanceMarkLink:after {
+    width: 120px;
+    top: -100px;
+  }
+
+  .acceptanceMarkImg {
+    max-height: 1.8em !important;
+    max-width: 7em !important;
+  }
+  .tooltipText {
+    width: 275px;
+    padding: 10px 0 0 20px;
+  }  
+ 
+
+}
+
+@media only screen and (max-width: 320px) {
+  #paymentDetailsPanel .visa, #paymentDetailsPanel .mastercard{
+    background-size: 10%;
+  }
+
+  #commands .btn {
+    width: 22%;
+    min-width: 45px;
+    padding: 0 8px;
+    font-size: 8px;
+    min-height: 22px;
+  }
+
+  .tooltipText {
+    width: 230px;
+    font-size: .65em;
+  }
+
+  .acceptanceMarkImg {
+    max-height: 1.4em !important;
+    max-width: 7.5em !important;
+  }
+
+  #vbvAcceptanceMarkLink:after {
+    width: 100px;
+  }
+}
+
+@media (min-device-width: 746px) and (max-device-width: 753px) {
+  #commands .btn {
+    width: 21%;
+  }
+}
+
+@media (min-width: 744px) and (max-width: 745px) {
+  #cardEntryPanel {
+    width: 100%;
+  }
+  #paypage {
+    width: 100%;
+  }
+  #footer {
+    margin: 0;
+    width: 100%;
+  }
+}
+
+
+@media (min-device-width: 680px) and (max-device-width: 743px) {
+  #paypage {
+    width: 100%;
+  }
+
+  #cardEntryPanel {
+    margin-left: -10px;
+  }
+}
+
+/* IE 10 and above */
+@media all and (-ms-high-contrast: none),
+(-ms-high-contrast: active) {
+  select::-ms-expand {
+    display: none;
+  }
+
+  #btnSubmit,
+  #btnCancel {
+    top: -45px;
+  }
+}
+
+
+

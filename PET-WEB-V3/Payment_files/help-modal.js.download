@@ -1,0 +1,2 @@
+function faqshow(){$("#helpModalBody").css({"display":"none"});$("#callModalBody").css({"display":"none"});$("#faqModalBody").removeAttr("style").show();gtmFAQSHow()}function callUshow(){$("#helpModalBody").css({"display":"none"});$("#faqModalBody").css({"display":"none"});$("#callModalBody").removeAttr("style").show();gtmCallUsShow()}
+function backToHelp(){$("#callModalBody").css({"display":"none"});$("#faqModalBody").css({"display":"none"});$("#helpModalBody").removeAttr("style").show();$("#helpBtn").focus();document.getElementById("helpBtn").focus()};
