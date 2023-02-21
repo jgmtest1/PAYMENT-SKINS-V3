@@ -595,7 +595,7 @@ iframe {
     width: 22%;
     min-width: 45px;
     padding: 5px 8px;
-    font-size: 9px;
+    font-size: 8px;
     min-height: 22px;
   }
 
@@ -614,9 +614,9 @@ iframe {
   }
 }
 
-@media only screen and (max-width: 318px) {
+@media (min-device-width: 321px) and (max-device-width: 367px) {
   #commands .btn {
-    font-size: 8px;
+    font-size: 9px;
   }
 }
 
