@@ -597,6 +597,11 @@ iframe {
     width: 100px;
   }
 }
+@media (min-device-width: 321px) and (max-device-width: 367px) {
+  #commands .btn {
+    font-size: 9px;
+  }
+}
 
 @media (min-device-width: 746px) and (max-device-width: 753px) {
   #commands .btn {
