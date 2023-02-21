@@ -500,7 +500,10 @@ div.inputValid {
     margin-right: 0;
   }
   #footer {    
-    top: -65px;
+    top: -45px;
+  }
+  #cardEntryForm {
+    padding-bottom: 30px;
   }
   
 }
