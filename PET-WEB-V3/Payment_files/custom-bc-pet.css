@@ -129,6 +129,7 @@
   flex-direction: row-reverse;
   justify-content: space-between; 
   position: relative;
+  margin-bottom: 1.75em;
 }
 
 #commands .btn { 
@@ -312,7 +313,7 @@ span[id$="HelpPanel"]:not(#cscLabelHelpPanel) {
   display: flex;  
   position: absolute;
   right: 0px;
-  top: -75px;
+  top: -85px;
   flex-direction: row-reverse;
   width: 40%;  
   margin: 0;
@@ -500,7 +501,7 @@ div.inputValid {
     margin-right: 0;
   }
   #footer {    
-    top: -45px;
+    top: -35px;
   }
   #cardEntryForm {
     padding-bottom: 30px;
