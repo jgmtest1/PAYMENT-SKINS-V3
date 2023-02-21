@@ -39,10 +39,10 @@
   font-style: normal;
 }
 
-#paypage {  
+#paypage {
   font-family: 'Latinotype-Goldplay-SemiBold';
   margin: 0 auto;
-  width: 100%;  
+  width: 100%;
   /* height: 37em; */
   border: 1px solid #e4e4e4;
   background: #fff;
@@ -51,15 +51,17 @@
   padding: 0 30px;
   position: relative;
 }
+
 #messagePanel {
   display: none;
 }
+
 .centered {
   margin: 0 auto;
-  width: 100%; 
+  width: 100%;
 }
 
-#cardEntryPanel { 
+#cardEntryPanel {
   margin-top: 0;
 }
 
@@ -124,15 +126,15 @@
   text-decoration: none !important;
 }
 
-#commands { 
+#commands {
   display: flex;
   flex-direction: row-reverse;
-  justify-content: space-between; 
+  justify-content: space-between;
   position: relative;
   margin-bottom: 1.75em;
 }
 
-#commands .btn { 
+#commands .btn {
   font-family: 'Latinotype - Goldplay SemiBold';
   font-weight: 600;
   -webkit-appearance: none;
@@ -141,7 +143,7 @@
   border-radius: 50px;
   -webkit-border-radius: 50px;
   -moz-border-radius: 50px;
-  -o-border-radius: 50px;  
+  -o-border-radius: 50px;
   width: 15%;
   min-width: 100px;
   min-height: 46px;
@@ -155,7 +157,7 @@
   background: #E7005D;
   cursor: pointer;
   position: absolute;
-  left: 25%;  
+  left: 25%;
   font-family: 'Latinotype-Goldplay-SemiBold';
 }
 
@@ -170,9 +172,12 @@
   padding-top: 2px;
   padding-bottom: 50px;
 }
-#paynowButtonHolder, #btnCancel {
+
+#paynowButtonHolder,
+#btnCancel {
   margin-top: 0;
 }
+
 @media screen and (max-width: 30em) {
   @media (min-device-width: 753px) and (max-device-width: 1180px) {
     #cardEntryForm {
@@ -180,9 +185,9 @@
     }
 
     #paypage {
-      width: 100%;     
+      width: 100%;
       box-sizing: border-box;
-    }    
+    }
   }
 
 
@@ -197,7 +202,7 @@
 
 #purchaseDetailsAmount {
   flex-direction: row;
-  color: #040741;  
+  color: #040741;
   border-bottom: 1px solid #e4e4e4;
   padding-bottom: 6px;
   margin: 20px 0;
@@ -221,7 +226,7 @@
 }
 
 .formInput {
-  box-sizing: border-box;  
+  box-sizing: border-box;
   box-shadow: 0px 3px #e8e8e8 !important;
 }
 
@@ -270,7 +275,7 @@ span[id$="HelpPanel"]:not(#cscLabelHelpPanel) {
   font-size: 14px;
 }
 
-#expirySection #expiryYearLabel {  
+#expirySection #expiryYearLabel {
   left: 55%;
 }
 
@@ -281,7 +286,7 @@ span[id$="HelpPanel"]:not(#cscLabelHelpPanel) {
 #expiryMonth,
 #startMonth,
 #expiryYear,
-#startYear {  
+#startYear {
   width: 45%;
 
 }
@@ -301,34 +306,36 @@ span[id$="HelpPanel"]:not(#cscLabelHelpPanel) {
 
 #csc,
 #confirmCsc,
-#issue {  
+#issue {
   width: 45%;
 }
 
-#paypage div[role="contentinfo"] { 
-  position: relative;  
+#paypage div[role="contentinfo"] {
+  position: relative;
 }
 
 #footer {
-  display: flex;  
+  display: flex;
   position: absolute;
   right: 0px;
   top: -85px;
   flex-direction: row-reverse;
-  width: 40%;  
+  width: 40%;
   margin: 0;
 }
 
-#btnCancel { 
+#btnCancel {
   position: absolute;
   left: 0;
   border-color: #e8e8e8 !important;
 }
 
-#paymentDetailsPanel .visa, #paymentDetailsPanel .mastercard{
+#paymentDetailsPanel .visa,
+#paymentDetailsPanel .mastercard {
   background-size: 6%;
   background-position: 98% 50%;
 }
+
 #vbvAcceptanceMarkLink:after {
   background: url(../images/barclaycard-logo.png) no-repeat center center/contain;
   content: "";
@@ -344,7 +351,7 @@ span[id$="HelpPanel"]:not(#cscLabelHelpPanel) {
 
 
 .acceptanceMarkImg {
-  max-height: 3.5em !important;  
+  max-height: 3.5em !important;
   max-width: 8.5em !important;
 }
 
@@ -357,7 +364,7 @@ span[id$="HelpPanel"]:not(#cscLabelHelpPanel) {
   top: -9px;
   font-size: 14px;
   color: #c00;
-  padding-bottom: 0em;  
+  padding-bottom: 0em;
   width: 80%;
 }
 
@@ -431,7 +438,7 @@ div.inputValid {
   .return-txt,
   #returnText {
     width: 100% !important;
-    padding: 0 20px;    
+    padding: 0 20px;
   }
 }
 
@@ -500,16 +507,19 @@ div.inputValid {
   .acceptanceMarkLink {
     margin-right: 0;
   }
-  #footer {    
+
+  #footer {
     top: -55px;
   }
+
   #cardEntryForm {
     padding-bottom: 30px;
   }
-  
+
 }
+
 @media (min-device-width: 540px) and (max-device-width: 575px) {
-  
+
   #paypage {
     width: 30em;
   }
@@ -542,7 +552,9 @@ iframe {
 }
 
 @media (min-device-width: 321px) and (max-device-width: 420px) {
-  #paymentDetailsPanel .visa, #paymentDetailsPanel .mastercard{
+
+  #paymentDetailsPanel .visa,
+  #paymentDetailsPanel .mastercard {
     background-size: 10%;
   }
 
@@ -563,16 +575,19 @@ iframe {
     max-height: 1.8em !important;
     max-width: 7em !important;
   }
+
   .tooltipText {
     width: 275px;
     padding: 10px 0 0 20px;
-  }  
- 
+  }
+
 
 }
 
 @media only screen and (max-width: 320px) {
-  #paymentDetailsPanel .visa, #paymentDetailsPanel .mastercard{
+
+  #paymentDetailsPanel .visa,
+  #paymentDetailsPanel .mastercard {
     background-size: 10%;
   }
 
@@ -580,7 +595,7 @@ iframe {
     width: 22%;
     min-width: 45px;
     padding: 5px 8px;
-    font-size: 8px;
+    font-size: 9px;
     min-height: 22px;
   }
 
@@ -599,6 +614,12 @@ iframe {
   }
 }
 
+@media only screen and (max-width: 318px) {
+  #commands .btn {
+    font-size: 8px;
+  }
+}
+
 @media (min-device-width: 746px) and (max-device-width: 753px) {
   #commands .btn {
     width: 21%;
@@ -609,9 +630,11 @@ iframe {
   #cardEntryPanel {
     width: 100%;
   }
+
   #paypage {
     width: 100%;
   }
+
   #footer {
     margin: 0;
     width: 100%;
@@ -641,6 +664,3 @@ iframe {
     top: -45px;
   }
 }
-
-
-
