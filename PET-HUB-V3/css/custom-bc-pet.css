@@ -42,8 +42,7 @@
 #paypage {  
   font-family: 'Latinotype-Goldplay-SemiBold';
   margin: 0 auto;
-  width: 100%;  
-  /* height: 37em; */
+  width: 100%;    
   border: 1px solid #e4e4e4;
   background: #fff;
   border-radius: 10px;
@@ -500,7 +499,10 @@ div.inputValid {
     margin-right: 0;
   }
   #footer {    
-    top: -65px;
+    top: -45px;
+  }
+  #cardEntryForm {
+    padding-bottom: 30px;
   }
   
 }
