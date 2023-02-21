@@ -514,9 +514,14 @@ div.inputValid {
   }
 
   #cardEntryForm {
-    padding-bottom: 20px;
+    padding-bottom: 40px;
   }
 
+}
+@media only screen and (max-device-width: 575px) { 
+  #footer {
+    top: -85px;
+  }
 }
 
 @media (min-device-width: 540px) and (max-device-width: 575px) {
