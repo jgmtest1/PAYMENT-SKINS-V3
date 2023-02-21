@@ -479,7 +479,7 @@ div.inputValid {
 
   #commands {
     margin-top: 1em;
-    margin-bottom: 2.75em;
+    /* margin-bottom: 2.75em; */
   }
 
   #commands .btn {
@@ -510,12 +510,12 @@ div.inputValid {
   }
 
   #footer {
-    top: -55px;
+    top: -80px;
   }
 
-  #cardEntryForm {
+  /* #cardEntryForm {
     padding-bottom: 30px;
-  }
+  } */
 
 }
 
