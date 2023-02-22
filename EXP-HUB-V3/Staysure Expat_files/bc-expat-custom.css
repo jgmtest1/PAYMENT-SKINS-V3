@@ -1,0 +1,395 @@
+@import url("payPage.css");
+
+@font-face {
+  font-family: 'Ciutadella Rounded';
+  src: url('../fonts/CiutadellaRounded-Bd.eot');
+  /* IE9 Compat Modes */
+  src: url('../fonts/CiutadellaRounded-Bd.woff2') format('woff2'),
+    url('../fonts/CiutadellaRounded-Bd.woff') format('woff'),
+    url('../fonts/CiutadellaRounded-Bd.ttf') format('truetype');
+  /* Safari, Android, iOS */
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Ciutadella Rounded';
+  src: url('../fonts/CiutadellaRounded-SmBd.eot');
+  /* IE9 Compat Modes */
+  src: url('../fonts/CiutadellaRounded-SmBd.woff2') format('woff2'),
+    url('../fonts/CiutadellaRounded-SmBd.woff') format('woff'),
+    url('../fonts/CiutadellaRounded-SmBd.ttf') format('truetype');
+  /* Safari, Android, iOS */
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Ciutadella Rounded';
+  src: url('../fonts/CiutadellaRounded-Md.eot');
+  /* IE9 Compat Modes */
+  src: url('../fonts/CiutadellaRounded-Md.woff2') format('woff2'),
+    url('../fonts/CiutadellaRounded-Md.woff') format('woff'),
+    url('../fonts/CiutadellaRounded-Md.ttf') format('truetype');
+  /* Safari, Android, iOS */
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Ciutadella Rounded';
+  src: url('../fonts/CiutadellaRounded-Rg.eot');
+  /* IE9 Compat Modes */
+  src: url('../fonts/CiutadellaRounded-Rg.woff2') format('woff2'),
+    url('../fonts/CiutadellaRounded-Rg.woff') format('woff'),
+    url('../fonts/CiutadellaRounded-Rg.ttf') format('truetype');
+  /* Safari, Android, iOS */
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Barclaycard-lt;
+  src: url(../fonts/barclaycard_lt-webfont.eot),
+    /* IE9 Compat Modes */
+    url(../fonts/barclaycard_lt-webfont.woff) format('woff'),
+    url(../fonts/barclaycard_lt.ttf) format('truetype');
+  /* Safari, Android, iOS */
+  font-weight: normal;
+  font-style: normal;
+}
+
+#paypage {
+  margin: 0 auto;
+  width: 24em;
+  border: 1px solid #e4e4e4;
+}
+
+#cscDescLink {
+  display: inline-block !important;
+  text-decoration: none;
+  font-weight: normal;
+}
+
+#cscDescLink:hover {
+  text-decoration: underline;
+  font-weight: normal;
+}
+
+#indicateRequiredFieldsPanel,
+#addressPanel {
+  display: none;
+}
+
+#purchaseDetailsPanel h3,
+#purchaseDetailsGoods {
+  display: none;
+}
+
+#paymentDetailsPanel h3 {
+  display: none;
+}
+
+.requiredMessage {
+  color: #282828;
+}
+
+.labelHelpImg {
+  width: 18px;
+  height: 18px;
+  margin-left: 0 !important;
+  opacity: 0;
+}
+
+.formInput {
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.formInput:focus {
+  border-color: #bbb;
+  box-shadow: none;
+}
+
+.formLabel label,
+.formLabel span {
+  color: #2f2f2f !important;
+}
+
+.linkText,
+#aboutMasterpass {
+  color: #522567;
+  vertical-align: text-top;
+  text-decoration: none !important;
+}
+
+#commands {
+  margin-top: 2em;
+}
+
+#commands .btn {
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -o-border-radius: 3px;
+  font-family: "Ciutadella Rounded", Helvetica, Arial, sans-serif;
+  font-weight: 600;
+}
+
+#commands .btn.primary {
+  background: #ea580c;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+#commands .btn.secondary {
+  color: #60267d;
+  border-color: #522367;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+#cardEntryForm {
+  width: 20.0em;
+}
+
+#cscDialogTitle {
+  color: #626d75;
+}
+
+#cscHeading h2 {
+  display: none;
+}
+
+#paynowButtonHolder {
+  display: block;
+  margin-top: 1em;
+}
+
+#btnSubmit,
+.cancelButton {
+  padding: 0;
+}
+
+@media screen and (max-width: 30em) {
+  #cardEntryForm {
+    width: 100%;
+  }
+
+  #paypage {
+    width: 100%;
+    padding: 0 1em;
+    box-sizing: border-box;
+  }
+}
+
+@media screen and (max-width: 289px) {
+  #paypage {
+    padding: 0 7px;
+  }
+}
+
+.logo {
+  margin: 0px auto -39px auto;
+  text-align: center;
+  width: revert;
+}
+
+.logoImg {
+  margin-top: 0em;
+  display: inline-block;
+  margin-right: auto;
+  height: 100px;
+  width: 300px;
+  margin-left: auto;
+}
+
+.formSection {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+#purchaseDetailsAmount {
+  flex-direction: row;
+  color: #522567;
+  border-bottom: 1px solid #e4e4e4;
+  padding-bottom: 6px;
+  margin: 20px 0;
+  font-size: 1.25em;
+}
+
+#purchaseDetailsAmount .formLabel {
+  flex: 1;
+  font-weight: 500;
+}
+
+#paymentDetailsPanel .visa,
+#paymentDetailsPanel .mastercard {
+  background-size: 10%;
+  background-position: 98% 50%;
+}
+
+#purchaseDetailsAmount .bodyText {
+  color: #522567;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.formLabel {
+  padding-left: 0 !important;
+  margin-bottom: 6px !important;
+  margin-top: 0;
+}
+
+.formInput {
+  box-sizing: border-box;
+}
+
+span[id$="HelpPanel"]:not(#cscLabelHelpPanel) {
+  background: url("../images/helpIcon-sts.gif") no-repeat right;
+  width: 18px;
+  height: 18px;
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 25px;
+}
+
+#confirmCheck1HelpPanel {
+  display: inline-block !important;
+  top: 0 !important;
+}
+
+#cardNumber,
+#cardholderName {
+  width: 80% !important;
+}
+
+#expirySection,
+#cscSection {
+  display: block;
+}
+
+#expiryLabelPanel,
+#cscLabelPanel {
+  width: 100%;
+}
+
+#expiryMonth,
+#startMonth,
+#expiryYear,
+#startYear {
+  width: 40%;
+}
+
+#csc,
+#confirmCsc,
+#issue {
+  width: 40%;
+}
+
+span#footerText {
+  text-align: right;
+  display: none;
+}
+
+#footer {
+  display: none;
+  text-align: left;
+  margin: 24px 5px 2px 3px;
+  width: 23em;
+  background-image: url(../images/barclaycard.png);
+  background-repeat: no-repeat;
+  background-size: 111px 21px;
+  height: 58px;
+  background-position-x: 15em;
+  background-position-y: 0px;
+}
+
+@media only screen and (max-width: 360px) {
+  #footer {
+    width: 100%;
+    background-position-x: 12em !important;
+  }
+}
+
+
+@media only screen and (max-width: 320px) {
+  .acceptanceMarkImg {
+    max-height: 2.5em !important;
+    max-width: 6.5em !important;
+  }
+  #footer {    
+    background-position-x: 9.75em !important;
+  }
+}
+@media only screen and (max-width: 375px) { 
+  #footer {    
+    background-position-x: 13em;
+  }
+}
+@media only screen and (max-width: 390px) {
+  #footer {
+    background-position-x: 14em;
+  }
+}
+
+.tooltip {
+  left: -20px;
+  top: -9px;
+  font-size: 14px;
+  color: #c00;
+  padding-bottom: 2em;
+  width: 80%;
+}
+
+.tooltip .tooltipText,
+.tooltip .tooltipBottom {
+  background-image: none;
+}
+
+div.inputError {
+  background: none;
+}
+
+#cscDialog {
+  transform: translate(-50%, 0px);
+  left: 50%;
+}
+
+#confirmCheck1Section {
+  display: none;
+}
+
+#frHeading,
+.success h2,
+#storeName {
+  color: #522367;
+}
+
+#mainErrorDiv #headerText {
+  display: none;
+}
+
+#amexAcceptanceMark,
+#jcbAcceptanceMark,
+#upiAcceptanceMark {
+  display: none;
+}
+
+#vbvAcceptanceMarkImg {
+  height: 4em;
+  margin-top: -1em;
+  margin-left: 10px;
+}
+
+img#mcAcceptanceMarkImg {
+  height: revert;
+  margin-top: -2em;
+}
+
+div.inputValid {
+  background-image: none;
+}

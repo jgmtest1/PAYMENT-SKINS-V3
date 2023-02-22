@@ -1,0 +1,1 @@
+$(document).ready(function(){logout=function(){window.location.href=window.location.pathname.substring(0,window.location.pathname.indexOf("/",2))+"/logout"};$("#logout").on("click",function(a){a.preventDefault();localStorage.removeItem("notes");$("#logoutDialog").modal("show")})});

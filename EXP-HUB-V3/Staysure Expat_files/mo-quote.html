@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<!-- saved from url=(0106)https://pp.eshapay.net/TICORP/pages/paypage.jsf?transref=c1b3478d-66e1-4fd7-bd52-6ebe39707e5a&store=500016 -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Complete your order - Barclaycard Checkout</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+        
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
+        <meta http-equiv="PRAGMA" content="NO-CACHE">
+        <meta http-equiv="EXPIRES" content="0">
+        
+        <link rel="icon" href="https://pp.eshapay.net/TICORP/images/favicon.ico">
+        <link href="./bc-expat-custom.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript" src="./masterpass_v6.js.download"></script>
+        <script type="text/javascript" src="./MasterPass.client-sandbox.js.download"></script>
+        <script type="text/javascript" src="./jquery.min.js.download"></script>
+        <script type="text/javascript" src="./jquery-ui.min.js.download"></script>
+        
+        
+        </head><body><span id="btnSubmitSrc" hidden="" aria-hidden="true">Pay Now</span>
+        <script type="text/javascript">
+            var isCardTypeDetectionConfigured = false;
+            var mobileCssEnabled = false;
+            var cscEnabled = true;
+            var issueEnabled = false;
+            var isMobile = false;
+            var cardholderNameEnabled = true;
+            var focusField = "";
+            var cardNumberPlaceholder = "Enter your Card Number";
+            var cardholderNamePlaceholder = "Enter your Name";
+            var cscPlaceholder = "";
+            var submitOrderButtonText = $("#btnSubmitSrc").text();
+            var closeIcon = "../images/closeIcon.png";
+            var cscImage = "../images/cscLocation.png";
+            var displayCSChelpText = "false";
+            var paymentMethod = "CARD";
+            var paymentMethodsAvailable = false;
+            var displayManualAuthPanel = false;
+            var showPayerAuthPostPanel = false;
+            var cardTokenUsed = false;
+            var confirmCheck1Disabled = false;
+            var confirmCheck2Disabled = false;
+            var cardOptionsJsonFormat = '';
+            var monthsCommaSeparatedList = "Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec";
+            var transactionAmount = "€11.03";
+            var tokenCardType = "";
+            var cardTypeIcon = true;
+            var disableSubmitButton = false;
+            var ctxPath = "/TICORP";
+            var paymentCallbacks = {
+                "MASTER_PASS": function() {
+                    return masterpass_v6_checkout(ctxPath + '/rest/wallets/MasterPass', function() {
+                        window.location.reload();
+                    });
+                }
+            };
+
+            var visaCheckoutUnavailableMsg = 'VISA Checkout is currently unavailable. Please use a different payment method.';
+            var enhancedErrorView = 'false';
+			var enableAutocomplete = 'false';
+            var startDateSelectionMode = 'dropdown';
+            var expiryDateSelectionMode = 'dropdown';
+            var addressEnabledForStore = true;
+            var billingAddressEnabledForStore = true;
+            var billingAddressFromMerchant = {
+                name: "Dfd ",
+                line1: "Dfdfdfdf",
+                line2: "",
+                city: "",
+                county: "",
+                countryLocalised: "France",
+                postcode: "12345"
+            };
+            var visaCheckoutConfig = {
+                apiKey: '0MLNYXNDO9M9O3AH4FT421TlEcJD1kGRtUMPIRk4vLu-fXFhc',
+                externalClientId: '',
+                externalProfileId: '',
+                displayName : ' Merchant'
+            };
+            var kountConfig = {
+                kountMerchantId: '0',
+                kountTimeout: '0',
+                enabled :  false
+            };
+            var visaCheckoutEarlyFlow = false;
+            var cardTypeNotFoundInlineMsg = "Card type not accepted";
+            var cardTypeNotFoundTopMsg = "Card type not accepted";
+            var cardTypeErrorInlineMsg = "Card type not accepted";
+            var cardTypeErrorTopMsg = "An error has occurred with your card type. Please try again.";
+            var cardOptionsConfigured = false;
+            var expiryMonthFormat = "mm";
+            var expiryYearFormat = "yy";
+            var expiryYearRange = 10;
+            var startMonthFormat = "mm";
+            var startYearFormat = "yy";
+            var startYearRange = 50;
+            var expiryMonthPlaceholder = "";
+            var expiryYearPlaceholder = "";
+            var startAndExpiryMonthMMFormatPlaceholder = "mm";
+            var startAndExpiryMonthMMMFormatPlaceholder = "mmm";
+            var startAndExpiryYearYYFormatPlaceholder = "yy";
+            var startAndExpiryYearYYYYFormatPlaceholder = "yyyy";
+            var btnStatusEnabledText = "button is enabled";
+            var btnStatusDisabledText = "button is disabled, please enter valid details";
+            var cscLinkSelectionMode = "popup";
+            var cscHelpValue = "What's this?";
+            var whatIsCSCPopupAdditionalInformation = "opens as pop-up";
+            var whatIsCSCInlineAdditionalInformation = "opens inline";
+            var cscDescription = "The Card Security Code is a 3 or 4 digit value. It can be found on the front of your card or on the signature strip."
+            var ariaLive = "polite";
+            var inlineErrorMessagePosition = "belowField";
+            var isImageTypeSvg = false;
+            var isDisplayInlineValidationError = false;
+            var linkedErrors = "";
+            var defaultIssueFieldRequired = false;
+            var issueFieldRequired = false;
+            var showConfirmTokenPanel = false;
+        </script>
+        
+
+        <link type="text/css" rel="stylesheet" href="./jquery-ui.min.css">
+        <noscript>
+            <link type="text/css" rel="stylesheet" href="../css/nojavascript.css" />
+        </noscript>
+    
+    
+    
+    
+
+    <noscript>
+        <iframe id="nonJsKountLogoFrame" width=1 height=1 rendered=false frameborder=0 scrolling=no src=>
+        </iframe>
+    </noscript>
+    <script type="text/javascript" src="./browserinfo.js.download"></script>
+    <script type="text/javascript" src="./paypage.js.download"></script>
+    <script type="text/javascript" src="./cardSchemeCommon.js.download"></script>
+
+    <span id="jsCardOptionsHelper">
+        <script type="text/javascript" src="./cardOptionsHelper.js.download"></script>
+    </span><span id="jsValidation">
+        <script type="text/javascript" src="./validation.js.download"></script>
+    </span><span id="jsCardScheme">
+        <script type="text/javascript" src="./cardscheme.js.download"></script>
+    </span><div id="paypage">
+        <div role="heading" aria-level="1">
+            
+            <div id="ppLogo" class="logo"><img id="ppLogoImg" src="./staysure_expat_logo.png" alt="barclaycard" title="barclaycard" class="logoImg"></div><div id="paypageHeading">
+                <h1>
+                    Details of your order
+                </h1>
+            </div>
+
+            
+            
+        </div>
+        <div role="main">
+            <h2 class="hidden">Click Complete purchase to complete your purchase, or Cancel to go back.</h2>
+        
+        
+<form id="cardEntryForm" name="cardEntryForm" method="post" action="https://pp.eshapay.net/TICORP/pages/paypage.jsf;jsessionid=tVh02ABr1KCohGpqIy2t4JQq.node1" accept-charset="utf-8" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="cardEntryForm" value="cardEntryForm">
+<div id="storeName"></div><div id="indicateRequiredFieldsPanel" class="requiredMessagePanel"><span id="requiredFieldsMessage1" class="requiredMessage">Mandatory fields are marked with an asterisk (</span><span id="requiredIndicator" class="required">*</span><span id="requiredFieldsMessage2" class="requiredMessage">).</span></div><div id="messagePanel" style="display: none">
+                <div id="messagePanelDiv" style="display: flex;">
+                <div id="errorIconDiv">
+                    <img id="errorIcon" src="./dcc_error.png" alt="Attention:" title="Attention:">
+                </div>
+                <div role="alert">
+                    
+                </div>
+                </div>
+            </div>
+            
+            
+
+            
+            
+
+            
+            
+
+            
+            
+
+            
+            
+
+            
+
+            <div id="cardEntryPanel" class="centered">
+                    
+                <div id="purchaseDetailsPanel">
+                    <h3><span id="purchaseDetailsHeader" class="legend">Purchase Details</span></h3>
+
+                    <div id="purchaseDetailsGoods" class="formSection"><span id="goodsLabel" class="formLabel">Product</span><span id="goods" class="bodyText">10765</span></div><div id="purchaseDetailsAmount" class="formSection"><span id="amountLabel" class="formLabel">Total payment amount</span><span id="amount" class="bodyText">€11.03</span></div></div><div id="addressPanel"><div id="billingAddressPanel" style="display: inline-block">
+                        
+                        <h3><span id="billingAddressHeader" class="legend">Billing Address</span></h3>
+
+                        
+                        <span id="billingAddressName" class="bodyText billingAddress" style="display: block">Dfd </span><span id="billingAddressLine1" class="bodyText billingAddress" style="display: block">Dfdfdfdf</span><span id="billingAddressLine2" class="bodyText billingAddress" style="display: none"></span><span id="billingAddressCity" class="bodyText billingAddress" style="display: none"></span><span id="billingAddressCounty" class="bodyText billingAddress" style="display: none"></span><span id="billingAddressCountry" class="bodyText billingAddress" style="display: block">France</span><span id="billingAddressPostCode" class="bodyText billingAddress" style="display: block">12345</span></div></div>
+
+                
+
+                
+
+                    
+                
+
+                
+
+                    
+                <span id="confirmCscInlinePanel" style="display: none"><span id="confirmCscInlineText" class="bodyText">The Card Security Code is a 3 or 4 digit value. It can be found on the front of your card or on the signature strip.</span></span><div id="paymentDetailsPanel">
+                    <h3><label id="paymentDetailsTitle" class="legend">
+Enter Payment Details</label></h3>
+                    <div id="cardholderNameSection" class="formSection required"><span id="cardholderNameLabelPanel" class="formLabel"><label id="cardholderNameLabel" for="cardholderName">
+Cardholder Name<span id="cardholderNameRequired" class="required">*</span><span id="cardholderNameDescription" class="description">Enter your name as it appears on the front of your card</span></label><span id="cardholderNameHelpPanel"><img id="cardholderNameLabelHelpIcon" src="./helpIcon-sts.gif" alt="Your name as it appears on the front of your card" title="Your name as it appears on the front of your card" class="labelHelpImg"></span></span><input id="cardholderName" type="text" name="cardholderName" autocomplete="off" class="formInput" maxlength="32" placeholder="Enter your Name" aria-describedby="cardholderNameErrorMessageDiv" spellcheck="false" aria-required="true"><div id="cardholderNameToolTip" class="tooltip"><span id="cardholderNameTooltipText" class="tooltipText">Enter your name as it appears on the front of your card</span>
+                            
+                            <span class="tooltipBottom">&nbsp;</span>
+                        </div>
+                        
+                        
+                        
+
+                        
+
+                        
+                        
+                        
+                            
+                        
+
+                        
+                        
+                        
+                            
+
+
+
+
+
+<div id="cardholderNameMessagePanel" class="errorMessagePanel" style="display: none">
+    <div id="errorIconDiv">
+        <img id="cardholderNameErrorIcon" src="./dcc_error.png" alt="Attention:" title="Attention:" class="inlineErrorIcon">
+    </div>
+    <div role="alert">
+        
+    </div>
+</div></div><div id="cardNumberSection" class="formSection required"><span id="cardNumberLabelPanel" class="formLabel"><label id="cardNumberLabel" for="cardNumber">
+Card Number<span id="cardNumberRequired" class="required">*</span><span id="cardDescription" class="description">The long number on the front of your card</span></label><span id="cardNumberHelpPanel"><img id="cardNumberLabelHelpIcon" src="./helpIcon-sts.gif" alt="The long number on the front of your card" title="The long number on the front of your card" class="labelHelpImg"></span></span><input id="cardNumber" type="text" name="cardNumber" autocomplete="off" class="formInput " maxlength="25" placeholder="Enter your Card Number" pattern="[0-9]*" inputmode="numeric" aria-describedby="cardholderNumberErrorMessageDiv" aria-required="true"><div id="cardNumberToolTip" class="tooltip"><span id="cardNumberTooltipText" class="tooltipText">The long number on the front of your card</span>
+                            
+                            <span class="tooltipBottom">&nbsp;</span>
+                        </div>
+                        
+                        
+                        
+                        
+                        
+                        
+
+                        
+                            
+                        
+
+                        
+                        
+
+                        
+                        
+
+                        
+                            
+
+
+
+
+
+<div id="cardholderNumberMessagePanel" class="errorMessagePanel" style="display: none">
+    <div id="errorIconDiv">
+        <img id="cardholderNumberErrorIcon" src="./dcc_error.png" alt="Attention:" title="Attention:" class="inlineErrorIcon">
+    </div>
+    <div role="alert">
+        
+    </div>
+</div></div><div id="expirySection" class="formSection required"><span id="expiryLabelPanel" class="formLabel"><span id="expiryLabel">Expiry Date</span><span id="expiryRequired" class="required">*</span><span id="expiryLabelHelpPanel"><img id="expiryLabelHelpIcon" src="./helpIcon-sts.gif" alt="The month and year of your expiry date" title="The month and year of your expiry date" class="labelHelpImg"></span></span><label id="expiryMonthLabel" for="expiryMonth" class="dateDropDownLabel">
+Expiry Month<span id="expiryMonthRequired" class="required">*</span><span id="expiryMonthDescription" class="description">The month of your expiry date</span></label><select id="expiryMonth" name="expiryMonth" class="formInput" size="1" aria-describedby="expiryDateErrorMessageDiv" aria-required="true">	<option value="">Month</option>
+	<option value="01">1</option>
+	<option value="02">2</option>
+	<option value="03">3</option>
+	<option value="04">4</option>
+	<option value="05">5</option>
+	<option value="06">6</option>
+	<option value="07">7</option>
+	<option value="08">8</option>
+	<option value="09">9</option>
+	<option value="10">10</option>
+	<option value="11">11</option>
+	<option value="12">12</option>
+</select><label id="expiryYearLabel" for="expiryYear" class="dateDropDownLabel">
+Expiry Year<span id="expiryYearRequired" class="required">*</span><span id="expiryYearDescription" class="description">The year of your expiry date</span></label><select id="expiryYear" name="expiryYear" class="formInput" size="1" aria-describedby="expiryDateErrorMessageDiv" aria-required="true">	<option value="">Year</option>
+	<option value="2022">22</option>
+	<option value="2023">23</option>
+	<option value="2024">24</option>
+	<option value="2025">25</option>
+	<option value="2026">26</option>
+	<option value="2027">27</option>
+	<option value="2028">28</option>
+	<option value="2029">29</option>
+	<option value="2030">30</option>
+	<option value="2031">31</option>
+</select><div id="expiryMonthToolTip" class="tooltip"><span id="expiryMonthTooltipText" class="tooltipText">The month of your expiry date</span>
+                        
+                        <span class="tooltipBottom">&nbsp;</span>
+                    </div><div id="expiryYearToolTip" class="tooltip"><span id="expiryYearTooltipText" class="tooltipText">The year of your expiry date</span>
+                        
+                        <span class="tooltipBottom">&nbsp;</span>
+                    </div></div>
+
+                    
+
+                    
+                    
+                    
+
+                    
+                    
+
+                    
+                    
+
+                    
+                    
+
+                    
+                    
+
+                    
+                    
+                    
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                        
+                    
+
+                
+
+                
+                
+
+            
+                
+                    
+                
+                
+                    
+
+
+
+
+
+<div id="expiryDateMessagePanel" class="errorMessagePanel" style="display: none">
+    <div id="errorIconDiv">
+        <img id="expiryDateErrorIcon" src="./dcc_error.png" alt="Attention:" title="Attention:" class="inlineErrorIcon">
+    </div>
+    <div role="alert">
+        
+    </div>
+</div>
+                
+                
+
+                    
+
+                        
+                        
+                        
+                        
+                            
+                        
+
+                        
+                            
+
+
+
+
+
+<div id="startDateMessagePanel" class="errorMessagePanel" style="display: none">
+    <div id="errorIconDiv">
+        <img id="startDateErrorIcon" src="./dcc_error.png" alt="Attention:" title="Attention:" class="inlineErrorIcon">
+    </div>
+    <div role="alert">
+        
+    </div>
+</div><div id="cscSection" class="formSection required"><span id="cscLabelPanel" class="formLabel"><label id="cscLabel" for="csc">
+Card Security Code<span id="cscRequired" class="required ">*</span><span id="cscDescription" class="description">The Card Security Code is a 3 or 4 digit value.</span></label><span id="cscLabelHelpPanel"><img id="cscLabelHelpIcon" src="./helpIcon-sts.gif" alt="The Card Security Code is a 3 or 4 digit value" title="The Card Security Code is a 3 or 4 digit value" class="labelHelpImg"></span></span><input id="csc" type="text" name="csc" autocomplete="off" class="formInput" maxlength="4" pattern="[0-9]*" inputmode="numeric" placeholder="" aria-describedby="cscErrorMessageDiv" aria-required="true"><a id="cscDescLink" name="cscDescLink" href="https://pp.eshapay.net/TICORP/pages/cscDialog.jsf;jsessionid=tVh02ABr1KCohGpqIy2t4JQq.node1" title="What is my Card Security Code?" target="_blank" aria-label="What&#39;s this? opens as pop-up "><span id="whatIsCSCLink" class="linkText">What's this?</span></a><div id="cscToolTip" class="tooltip"><span id="cscTooltipText" class="tooltipText">The Card Security Code is a 3 or 4 digit value.</span>
+                            
+                            <span class="tooltipBottom">&nbsp;</span>
+                        </div>
+                        
+                        
+                        
+
+                        
+                        
+                        
+                        
+                        
+                            
+                        
+
+                        
+                        
+
+                        
+                        
+
+                        
+                        
+                        
+                            
+
+
+
+
+
+<div id="cscMessagePanel" class="errorMessagePanel" style="display: none">
+    <div id="errorIconDiv">
+        <img id="cscErrorIcon" src="./dcc_error.png" alt="Attention:" title="Attention:" class="inlineErrorIcon">
+    </div>
+    <div role="alert">
+        
+    </div>
+</div></div><span id="cscInlinePanel" style="display: none"><span id="cscInlineText" class="bodyText">The Card Security Code is a 3 or 4 digit value. It can be found on the front of your card or on the signature strip.</span></span><div id="confirmCheck1Section" class="formSection "><span id="confirmCheck1LabelPanel" class="formLabel"><label id="confirmCheck1Label" for="confirmCheck1">
+I have read the terms and conditions<span id="confirmCheck1Description" class="description">Please tick this box to confirm you have read the terms and conditions.</span></label><span id="confirmCheck1HelpPanel"><img id="confirmCheck1LabelHelpIcon" src="./helpIcon-sts.gif" alt="Please tick this box to confirm you have read the terms and conditions." title="Please tick this box to confirm you have read the terms and conditions." class="labelHelpImg"></span></span><input id="confirmCheck1" type="checkbox" name="confirmCheck1" class="formInput" aria-describedby="confirmCheck1ErrorMessageDiv" aria-required="false"><div id="confirmCheck1ToolTip" class="tooltip"><span id="confirmCheck1TooltipText" class="tooltipText">Please tick this box to confirm you have read the terms and conditions.</span>
+                            
+                            <span class="tooltipBottom">&nbsp;</span>
+                        </div>
+                        
+                        
+                        
+
+                        
+                        
+
+                        
+                        
+                        
+                            
+
+
+
+
+
+<div id="confirmCheck1MessagePanel" class="errorMessagePanel" style="display: none">
+    <div id="errorIconDiv">
+        <img id="confirmCheck1ErrorIcon" src="./dcc_error.png" alt="Attention:" title="Attention:" class="inlineErrorIcon">
+    </div>
+    <div role="alert">
+        
+    </div>
+</div></div></div><div id="visaCheckoutPaymentDetailsPanel" class="visaCheckoutPanel">
+                    <h3 class="title">
+                        <span id="visaCheckoutpaymentDetailsTitle" class="legend">Payment Details</span>
+                    </h3>
+                    <h3 class="link">
+                        <a id="visaCheckoutChangeCardLink" name="visaCheckoutChangeCardLink" href="https://pp.eshapay.net/TICORP/pages/;jsessionid=tVh02ABr1KCohGpqIy2t4JQq.node1" title="Select a different payment card" target="_blank" class="link visaCheckoutChangeCard"><span class="text">Change</span></a>
+                    </h3>
+
+                    <div class="clear"></div>
+
+                    <div class="cardArt spacer"></div>
+                    <img class="cardArt image">
+
+                    <div id="visaCheckoutCardType" class="formSection topRow"><span id="visaCheckoutCardTypeLabelPanel" class="formLabel"><span id="visaCheckoutCardTypeLabel">Card Type</span><span class="visaCheckoutSurchargeWarning">*</span><span id="visaCheckoutCardTypeHelpPanel"><img id="visaCheckoutcardTypeLabelHelpIcon" src="./helpIcon-sts.gif" alt="The type of your card" title="The type of your card" class="labelHelpImg"></span></span><span id="visaCheckoutCardTypeValue" class="bodyText visaCheckoutCardTypeValue"></span></div><div id="visaCheckoutCardNumber" class="formSection"><span id="visaCheckoutCardNumberLabelPanel" class="formLabel"><span id="visaCheckoutCardNumberLabel">Card Number</span><span id="visaCheckoutCardNumberHelpPanel"><img id="visaCheckoutCardNumberLabelHelpIcon" src="./helpIcon-sts.gif" alt="The long number on the front of your card" title="The long number on the front of your card" class="labelHelpImg"></span></span><span id="visaCheckoutCardNumberValue" class="bodyText"></span></div><div id="visaCheckoutCardExpiry" class="formSection"><span id="visaCheckoutExpiryLabelPanel" class="formLabel"><span id="visaCheckoutCardExpiryLabel">Expiry Date</span><span id="visaCheckoutCardExpiryLabelHelpPanel"><img id="visaCheckoutCardExpiryLabelHelpIcon" src="./helpIcon-sts.gif" alt="The month and year of your expiry date" title="The month and year of your expiry date" class="labelHelpImg"></span></span><span id="visaCheckoutCardExpiryValue" class="bodyText"></span></div>
+
+                    
+
+                    
+
+                    <div class="clear"></div>
+
+                    <div id="visaCheckoutSurchargeWarning" class="formSection visaCheckoutSurchargeWarning"><span id="visaCheckoutSurchargeWarningText" class="bodyText footnote">* This card type attracts a surcharge</span></div><div id="visaCheckoutAddressChangeWarning" class="formSection"><span id="visaCheckoutAddressChangeWarningText" class="bodyText footnote">Your billing address may have changed. Please check above and if not correct, select 'Change' above this message.</span></div></div><div id="visaCheckoutPaymentSummaryPanel" class="visaCheckoutPanel">
+                    <h3><span id="visaCheckoutpaymentSummaryTitle" class="legend">Payment Summary</span></h3>
+
+                    <div id="visaCheckoutPaymentSummaryAmount" class="formSection"><span id="visaCheckoutPaymentSummaryAmountLabel" class="formLabel">Total payment amount</span><span id="visaCheckoutPaymentSummaryAmountValue" class="bodyText"></span></div><div id="visaCheckoutPaymentSummarySurcharge" class="formSection surcharge"><span id="visaCheckoutPaymentSummarySurchargeLabel" class="formLabel">Surcharge Amount</span><span id="visaCheckoutPaymentSummarySurchargeValue" class="bodyText"></span></div><div id="visaCheckoutPaymentSummaryTotal" class="formSection surcharge"><span id="visaCheckoutPaymentSummaryTotalLabel" class="formLabel">Total Amount</span><span id="visaCheckoutPaymentSummaryTotalValue" class="bodyText"></span></div></div>
+                        
+                
+
+                            
+                
+
+                
+
+                
+
+                <div class="centered">
+                        
+                    
+                </div>
+
+                <input id="encryptedPaymentToken" type="hidden" name="encryptedPaymentToken">
+
+                    
+                <div id="commands">
+                    <span id="submitHelp">Buttons will be disabled if the What's this? link clicked. Click on the Close link to make the buttons active. </span>
+
+                        
+                    
+                        
+                    <div id="paynowButtonHolder">
+                        <span style="display: none;" class="paynowButtonStatus btn primary submit-PayNow"></span>
+                    <input id="btnSubmit" type="submit" name="btnSubmit" value="Pay Now" accesskey="P" title="Pay Now button is enabled" class="submitButton btn primary submit-PayNow">
+                    </div>
+                    <div id="googlepayButtonHolder" style="display: none;" aria-label="Pay using Google Pay"></div>
+
+                        
+                    <input id="btnCancel" type="submit" name="btnCancel" value="Back" accesskey="C" class="cancelButton btn secondary">
+
+                        
+                    
+                </div>
+                
+            </div>
+            <input id="jsEnabled" type="hidden" name="jsEnabled" value="true"><input id="javaEnabled" type="hidden" name="javaEnabled" value="false"><input id="txnref" type="hidden" name="txnref" value="c1b3478d-66e1-4fd7-bd52-6ebe39707e5a"><input id="screenResolution" type="hidden" name="screenResolution" value="1129X2600"><input id="timezone" type="hidden" name="timezone" value="-330"><input id="screenColorDepth" type="hidden" name="screenColorDepth" value="24"><input id="kountSessionId" type="hidden" name="kountSessionId"><input id="kountError" type="hidden" name="kountError"><input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="-1744824564246141263:7810107608116300349" autocomplete="off">
+</form><div id="cscDialog">
+            <div id="cscDialogContent" role="dialog" aria-modal="true" aria-details="dialogDesc">
+                <a id="closeCSCIcon" name="closeCSCIcon" href="https://pp.eshapay.net/TICORP/pages/;jsessionid=tVh02ABr1KCohGpqIy2t4JQq.node1" class="closeDialogIcon"><img id="closeCSCIconImg" src="https://pp.eshapay.net/TICORP/pages/paypage.jsf?transref=c1b3478d-66e1-4fd7-bd52-6ebe39707e5a&amp;store=500016" alt="Close" title="Close"></a><div id="cscHeading">
+                <h2 id="dialogTitleHtwo">
+                     Card Security Code
+                </h2>
+                </div><span id="cscDialogTitle" class="dialogTitle">What is my Card Security Code?</span>
+                
+                
+					<div id="dialogDesc">
+						<div id="cscDescriptionBody">
+							<span id="cscText" class="bodyText">The Card Security Code is a 3 or 4 digit value. It can be found on the front of your card or on the signature strip.</span>
+							<div id="cscRightImage">&nbsp;</div>
+							<div id="cscBottomImage">
+								<img id="cscImage" src="https://pp.eshapay.net/TICORP/pages/paypage.jsf?transref=c1b3478d-66e1-4fd7-bd52-6ebe39707e5a&amp;store=500016" alt="Printed on the signature strip on the back or on the front of the card ">
+							</div>
+						</div>
+					</div>
+
+                <a id="closeCSCDesc" name="closeCSCDesc" href="https://pp.eshapay.net/TICORP/pages/;jsessionid=tVh02ABr1KCohGpqIy2t4JQq.node1"><span id="closeCSCLink" class="linkText">Close pop up</span></a>
+            </div>
+        </div>
+
+        
+        
+
+
+        
+        
+
+        
+        
+        </div>
+        <div role="contentinfo">
+            
+            
+        </div>
+        
+        <form name="returnForm" action="https://pp.eshapay.net/TICORP/pages/return.jsf;jsessionid=tVh02ABr1KCohGpqIy2t4JQq.node1?txnref=c1b3478d-66e1-4fd7-bd52-6ebe39707e5a" method="post"></form>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+
+    
+     
+
+
+
+
+<script type="text/javascript">
+	function disableScrolling() {
+		document.ontouchmove = function(e) {
+			e.preventDefault();
+		};
+	}
+
+	function enableScrolling() {
+		document.ontouchmove = function(e) {
+			return true;
+		};
+	}
+</script>
+<div id="overlay"></div>
+<div id="waitPanel" class="wait">
+	
+	<span id="progressIgnore" class="hidden">Please ignore the following elements whilst completing the form </span><span id="progressHeader" class="centered"></span><img id="progressSpinnerImage" src="./ajax-loader-grey.gif" alt="Progress spinner animation"><span id="progressText" class="centered">Processing...</span>
+	
+	
+	
+</div>
+
+
+    
+    
+    
+
+<div tabindex="-1" role="dialog" class="ui-dialog ui-corner-all ui-widget ui-widget-content ui-front ui-resizable" aria-describedby="about" aria-labelledby="ui-id-1" style="display: none; position: absolute;"><div class="ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix"><span id="ui-id-1" class="ui-dialog-title"> </span><button type="button" class="ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close" title="Close"><span class="ui-button-icon ui-icon ui-icon-closethick"></span><span class="ui-button-icon-space"> </span>Close</button></div><div id="about" style="" class="ui-dialog-content ui-widget-content">
+                    <iframe id="about_iframe" frameborder="0" scrolling="no" width="450" height="700" src="./saved_resource.html"></iframe>
+                </div><div class="ui-resizable-handle ui-resizable-n" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-w" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-sw" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-ne" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-nw" style="z-index: 90;"></div></div></body></html>

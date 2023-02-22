@@ -1,0 +1,1 @@
+$.ajaxPrefilter(function(a,b,c){0<=a.url.indexOf("@hub.context@")&&(a.url=a.url.replace("@hub.context@",window.location.pathname.split("/")[1]))});
