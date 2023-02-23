@@ -380,7 +380,7 @@ div.inputError {
 #vbvAcceptanceMarkImg {
   height: 4em;
   margin-top: -1em;
-  margin-left: 10px;
+  margin-left: 25px;
 }
 
 img#mcAcceptanceMarkImg {
@@ -390,4 +390,9 @@ img#mcAcceptanceMarkImg {
 
 div.inputValid {
   background-image: none;
+}
+@media only screen and (max-width: 480px) { 
+  #vbvAcceptanceMarkImg {
+    margin-left: 0;
+  }
 }
