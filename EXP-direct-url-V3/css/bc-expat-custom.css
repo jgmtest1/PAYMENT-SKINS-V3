@@ -326,7 +326,7 @@ span#footerText {
 @media only screen and (max-width: 375px) { 
   #footer {    
     background-position-x: 13em;
-    width: auto;
+    width: 100%;
   }
 }
 @media only screen and (max-width: 390px) {
